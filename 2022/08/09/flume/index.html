@@ -66,7 +66,7 @@ Flu">
     <div class="e-content entry" itemprop="articleBody">
       
         <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。</p>
-<p><img src="/.io//DevGuide_image00.png" alt="Agent component diagram"></p>
+<p><img src="/DevGuide_image00.png" alt="Agent component diagram"></p>
 <p>实时读取服务器上的日志数据，将数据写入到HDFS</p>
 <h3 id="Flume的优点"><a href="#Flume的优点" class="headerlink" title="Flume的优点"></a>Flume的优点</h3><ol>
 <li><p>可以和任意存储进程集成</p>
@@ -172,18 +172,18 @@ Flu">
 <h2 id="Flume-事务"><a href="#Flume-事务" class="headerlink" title="Flume 事务"></a>Flume 事务</h2><p>Flume agent中间有三个组件，source  channel  sink，里面流的东西是event ，event由head和body组成</p>
 <p>事务分两个部分</p>
 <h3 id="put事务"><a href="#put事务" class="headerlink" title="put事务"></a>put事务</h3><p>source -&gt; channel的部分 </p>
-<p><img src="/.io//watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
+<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
 <p>首先Source会采集一批数据，封装为event，缓存达到batch data的最大容量时（batch data的大小取决于配置参数batch size的值），Flume开启事务：</p>
 <p>doPut（）:将这批event写入到临时缓冲区putList，putList是一个LinkedBlockingDeque<br>，大小取决于配置Channel的参数transaction capacity的大小。</p>
 <p>doCommit（）:检查channel内存队列是否足够合并，内存队列的大小由Channel的capacity参数控制， Channel的容量内存队列足够的时候，提交event成功。</p>
 <p>doRollback（）: channel内存队列空间不够时，回滚，这里会将整个putList中的数据都扔掉，然后给Source返回一个ChannelException异常，告诉Source数据没有采集上。Source会重新采集这批数据，然后开启新的事务。</p>
 <h3 id="Take事务"><a href="#Take事务" class="headerlink" title="Take事务"></a>Take事务</h3><p>channel -&gt; sink </p>
-<p><img src="/.io//watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center-16511116964952.png" alt="在这里插入图片描述"></p>
+<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center-16511116964952.png" alt="在这里插入图片描述"></p>
 <p>doTake（）：sink将数据剪切取到临时缓冲区takeList，takeList也是一个LinkedBlockingDeque，<br>大小取决于配置Channel的参数transaction capacity的大小，同时也拷贝一份放入写往HDFS的IO流中。</p>
 <p>doCommit（）：如果event全部发送成功，就清除takeList。</p>
 <p>doRollback（）：如果发送过程中出现异常，回滚，将takeList中的全部event归还给Channel。这个操作可能导致数据重复,如果已经写入一半的event到了HDFS，但是回滚时会向channel归还整个takeList中的event，后续再次开启事务向HDFS写入这批event时候，就出现了数据重复。</p>
 <p>Flume的事务仅能保证两个传输阶段的数据不丢，但是如果channel选用的是memory channel，那么由于memory channel将数据存储在内存中，一旦channel发生异常，数据仍然可能丢失，但采用File channel时，数据传输到channel时会落盘，再结合事务，会保证整体上数据不会丢失，但是仍然可能会在take事务阶段发生数据重复。</p>
-<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/.io//watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
+<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
 <ol>
 <li><p>Flume Channel Selectors ( 3 种 )</p>
 <p>作用就是选出event该去哪个channel，默认就是replicating（复制）</p>
@@ -213,28 +213,28 @@ Flu">
 </ol>
 <h2 id="Flume的拓扑结构"><a href="#Flume的拓扑结构" class="headerlink" title="Flume的拓扑结构"></a>Flume的拓扑结构</h2><ol>
 <li><p>串联</p>
-<p><img src="/.io//UserGuide_image03.png" alt="Two agents communicating over Avro RPC"></p>
+<p><img src="/UserGuide_image03.png" alt="Two agents communicating over Avro RPC"></p>
 </li>
 </ol>
 <p>​      将多个flume按顺序连接起来，不建议串联太长，因为如果中间一个出问题，整个通道就都完了</p>
 <ol start="2">
 <li>Consolidation 合并</li>
 </ol>
-<p><img src="/.io//UserGuide_image02.png" alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
+<p><img src="/UserGuide_image02.png" alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
 <p>​        大多数情况用这种，工作环境，服务器会非常多，将多个服务器的数据采集汇总，给每台服务器配一个flume，然后传送到一个统一的sink去汇总处理，日志分析</p>
 <ol start="3">
 <li>Multiplexing the flow 多路复用</li>
 </ol>
-<p><img src="/.io//UserGuide_image01.png" alt="A fan-out flow using a (UserGuide_image01.png) channel selector"></p>
+<p><img src="/UserGuide_image01.png" alt="A fan-out flow using a (UserGuide_image01.png) channel selector"></p>
 <p>​      支持将source分发到不同的channel，多个目的地</p>
 <ol start="4">
 <li><p>Load-Balance负载均衡和Failover 故障切换</p>
-<p><img src="/.io//watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center-16511166368648.png" alt="在这里插入图片描述"></p>
+<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center-16511166368648.png" alt="在这里插入图片描述"></p>
 </li>
 </ol>
 <p>将多个sink 组成一个组，sink组实现负载均衡和故障切换</p>
 <h2 id="案例五-多路"><a href="#案例五-多路" class="headerlink" title="案例五 多路"></a>案例五 多路</h2><p>有一个FlumeA监控文件，会把变动发到FlumeB，FlumeB负责写入hdfs，FlumeA还会发送给FlumeC，FlumeC就直接输出到本地console或者文件</p>
-<p><img src="/.io//image-20220428115518751-165111812064810.png" alt="image-20220428115518751"></p>
+<p><img src="/image-20220428115518751-165111812064810.png" alt="image-20220428115518751"></p>
 <ol>
 <li><p>配置文件 flume-file-flume.conf 用来将日志的内容发送到2个channel，两个sink</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line"></span><br><span class="line"># 配置 source</span><br><span class="line"># 配置 selector</span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line"># 配置sink k1</span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = hadoop201</span><br><span class="line">a1.sinks.k1.port = 4545</span><br><span class="line"># 配置sink k2</span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = hadoop201</span><br><span class="line">a1.sinks.k2.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置channel </span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># c2的类型是memory channel</span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line"># c2最多能容纳1000个event</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line"># c2的事务提交100个提交一次</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
@@ -247,7 +247,7 @@ Flu">
 <li><p>配置文件 flume-flume-local.conf 从flume到本地</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.channels = c4</span><br><span class="line">a3.sinks = k4</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a3.sources.r3.type = avro</span><br><span class="line">a3.sources.r3.bind = hadoop201</span><br><span class="line">a3.sources.r3.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置sink file roll sink</span><br><span class="line">a3.sinks.k4.type = file_roll</span><br><span class="line"># 不会自动建目录，请一定要提前建好目录</span><br><span class="line">a3.sinks.k4.sink.directory = /tmp/hadoop/logs</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c4的类型是memory channel</span><br><span class="line">a3.channels.c4.type = memory</span><br><span class="line"># c4最多能容纳1000个event</span><br><span class="line">a3.channels.c4.capacity = 1000</span><br><span class="line"># c4的事务提交100个提交一次</span><br><span class="line">a3.channels.c4.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a3.sources.r3.channels = c4</span><br><span class="line">a3.sinks.k4.channel = c4</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="/.io//image-20220428145440550.png" alt="image-20220428145440550" style="zoom: 50%;">
+<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="image-20220428145440550.png" alt="image-20220428145440550" style="zoom: 50%;" />
 
 <ol>
 <li><p>配置a1 flume-file-avro.conf</p>
