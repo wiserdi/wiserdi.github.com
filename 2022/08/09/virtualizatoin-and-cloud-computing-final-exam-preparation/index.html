@@ -1,71 +1,287 @@
-<!DOCTYPE HTML>
-<html lang="en">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>2022《虚拟化与云计算应用》期末复习 | The World to Affluence</title>
+  <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Admin">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="云计算的概念(KBX, N4S, fmi)https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types
-云计算是一种按使用量付费的模式，这种模式提供可用的、便捷的、按需的网络访问，">
+    <meta name="description" content="云计算的概念(KBX, N4S, fmi)https:&#x2F;&#x2F;azure.microsoft.com&#x2F;en-us&#x2F;overview&#x2F;what-is-cloud-computing&#x2F;#cloud-deployment-types 云计算是一种按使用量付费的模式，这种模式提供可用的、便捷的、按需的网络访问， 进入可配置的计算资源共享池（资源包括网络、服务器、存储、应用软件、服务），这些资源能够被快速提供，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022《虚拟化与云计算应用》期末复习">
+<meta property="og:url" content="https://wiserdi.github.io/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/index.html">
+<meta property="og:site_name" content="The World to Affluence">
+<meta property="og:description" content="云计算的概念(KBX, N4S, fmi)https:&#x2F;&#x2F;azure.microsoft.com&#x2F;en-us&#x2F;overview&#x2F;what-is-cloud-computing&#x2F;#cloud-deployment-types 云计算是一种按使用量付费的模式，这种模式提供可用的、便捷的、按需的网络访问， 进入可配置的计算资源共享池（资源包括网络、服务器、存储、应用软件、服务），这些资源能够被快速提供，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://docs.vmware.com/en/VMware-vSphere/images/GUID-5EB66614-1EE8-4F39-8C8B-1E97EEE76791-high.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220614202336908.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220614202358585.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220614202418845.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220614202438030.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220614202456913.png">
+<meta property="article:published_time" content="2022-08-09T12:20:08.000Z">
+<meta property="article:modified_time" content="2022-08-09T17:58:57.427Z">
+<meta property="article:author" content="Admin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://docs.vmware.com/en/VMware-vSphere/images/GUID-5EB66614-1EE8-4F39-8C8B-1E97EEE76791-high.png">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+  
+  <title>2022《虚拟化与云计算应用》期末复习 - The World to Affluence</title>
 
-  <meta property="og:title" content="2022《虚拟化与云计算应用》期末复习"/>
-  <meta property="og:site_name" content="The World to Affluence"/>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"wiserdi.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
 
   
-    <meta property="og:image" content=""/>
-  
-
-  <link rel="shortcut icon" href="/favicon.png">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  <!--[if lt IE 9]><script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script><![endif]-->
-  
-
 <meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">The World to Affluence</a></h1>
-  <h2><a href="/"></a></h2>
-</div>
-<nav id="main-nav" class="alignright">
-  <ul>
-    
-      <li><a href="/null">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article id="post-virtualizatoin-and-cloud-computing-final-exam-preparation" class="h-entry post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time class="dt-published" datetime="2022-08-09T12:20:08.000Z"><a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/">2022-08-09</a></time>
-      
-      
-  
-    <h1 class="p-name title" itemprop="headline name">2022《虚拟化与云计算应用》期末复习</h1>
   
 
-    </header>
-    <div class="e-content entry" itemprop="articleBody">
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2022《虚拟化与云计算应用》期末复习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-09 20:20" pubdate>
+          2022年8月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          57 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-        <h2 id><a href="#" class="headerlink" title></a></h2><h3 id="云计算的概念-KBX-N4S-fmi"><a href="#云计算的概念-KBX-N4S-fmi" class="headerlink" title="云计算的概念(KBX, N4S, fmi)"></a>云计算的概念(KBX, N4S, fmi)</h3><p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types">https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types</a></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2022《虚拟化与云计算应用》期末复习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id><a href="#" class="headerlink" title></a></h2><h3 id="云计算的概念-KBX-N4S-fmi"><a href="#云计算的概念-KBX-N4S-fmi" class="headerlink" title="云计算的概念(KBX, N4S, fmi)"></a>云计算的概念(KBX, N4S, fmi)</h3><p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types">https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types</a></p>
 <p>云计算是一种按使用量付费的模式，这种模式提供可用的、便捷的、按需的网络访问， 进入可配置的计算资源共享池（资源包括网络、服务器、存储、应用软件、服务），这些资源能够被快速提供，只需投入很少的管理工作，或与服务供应商进行很少的交互。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Simply put, cloud computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (“the cloud”) to offer faster innovation, flexible resources, and economies of scale. You typically pay only for cloud services you use, helping you lower your operating costs, run your infrastructure more efficiently, and scale as your business needs change.</span><br></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">Simply put, <span class="hljs-keyword">cloud </span>computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, <span class="hljs-keyword">and </span>intelligence—over the Internet (“the <span class="hljs-keyword">cloud”) </span>to offer faster innovation, flexible resources, <span class="hljs-keyword">and </span>economies of <span class="hljs-keyword">scale. </span>You typically pay only for <span class="hljs-keyword">cloud </span>services you use, helping you lower your operating costs, run your infrastructure more efficiently, <span class="hljs-keyword">and </span><span class="hljs-keyword">scale </span>as your <span class="hljs-keyword">business </span>needs change.<br></code></pre></td></tr></table></figure>
 
 <p>复习参考：</p>
 <p><a target="_blank" rel="noopener" href="https://yangguoping.blog.csdn.net/article/details/109583017">https://yangguoping.blog.csdn.net/article/details/109583017</a></p>
@@ -93,7 +309,7 @@
 </ol>
 <p>给你一个描述，或者给你一个产品，你要能分辨出是哪种服务</p>
 <p>亚马逊的AWS属于IaaS基础设施及服务，Windows Azure属于PaaS平台及服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IAAS(infrastructure 基础设施):硬件、裸机、裸金属、亚马逊的AWS</span><br><span class="line">SAAS(software 软件)：Word等各种软件类</span><br><span class="line">PAAS(platform 平台):亚马逊的平台、Microsoft Azure		</span><br><span class="line">CAAS(container 容器): Docker</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">IAAS</span><span class="hljs-params">(infrastructure 基础设施)</span></span>:硬件、裸机、裸金属、亚马逊的AWS<br><span class="hljs-function"><span class="hljs-title">SAAS</span><span class="hljs-params">(software 软件)</span></span>：Word等各种软件类<br><span class="hljs-function"><span class="hljs-title">PAAS</span><span class="hljs-params">(platform 平台)</span></span>:亚马逊的平台、Microsoft Azure		<br><span class="hljs-function"><span class="hljs-title">CAAS</span><span class="hljs-params">(container 容器)</span></span>: Docker<br><br></code></pre></td></tr></table></figure>
 
 
 
@@ -107,20 +323,20 @@
 <p>云使用监控</p>
 <p>资源复制</p>
 <h3 id="虚拟化-virtualization-的定义"><a href="#虚拟化-virtualization-的定义" class="headerlink" title="虚拟化(virtualization)的定义"></a><strong>虚拟化(virtualization)的定义</strong></h3><p>虚拟化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是表示计算机资源的抽象方法。通过虚拟化可以用与访问抽象前资源一致的方法访问抽象后的资源。这种资源的抽象方法并不受实现、地理位置或底层资源的物理配置的限制。 </span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">是表示计算机资源的抽象方法。通过虚拟化可以用与访问抽象前资源一致的方法访问抽象后的资源。这种资源的抽象方法并不受实现、地理位置或底层资源的物理配置的限制。 <br></code></pre></td></tr></table></figure>
 
 <p>虚拟化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是为某些事物创造的虚拟（相对于真实）版本，如操作系统、计算机系统、存储设备和网络资源等。虚拟化的对象是各种各样的资源,经过虚拟化后的逻辑资源对用户隐藏了不必要的细节，用户可以在虚拟环境中实现其在真实环境中的部分或者全部功能。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">是为某些事物创造的虚拟（相对于真实）版本，如操作系统、计算机系统、存储设备和网络资源等。虚拟化的对象是各种各样的资源,经过虚拟化后的逻辑资源对用户隐藏了不必要的细节，用户可以在虚拟环境中实现其在真实环境中的部分或者全部功能。<br></code></pre></td></tr></table></figure>
 
 
 
 <h3 id="虚拟化优点"><a href="#虚拟化优点" class="headerlink" title="虚拟化优点"></a><strong>虚拟化优点</strong></h3><p>虚拟机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可支持实现物理资源和资源池的动态共享</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">可支持实现物理资源和资源池的动态共享<br></code></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提高资源利用率，特别是针对那些平均需求远低于需要为其提供专用资源的不同负载。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">提高资源利用率，特别是针对那些平均需求远低于需要为其提供专用资源的不同负载。<br></code></pre></td></tr></table></figure>
 
 <p>虚拟化技术</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将计算机的各种实体资源（CPU、内存、磁盘空间、网络适配器等），予以抽象、转换后呈现出来并可分割、组合为一个或多个电脑配置环境。</span><br></pre></td></tr></table></figure>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">将计算机的各种实体资源（<span class="hljs-meta">CPU</span>、内存、磁盘空间、网络适配器等），予以抽象、转换后呈现出来并可分割、组合为一个或多个电脑配置环境。<br></code></pre></td></tr></table></figure>
 
 
 
@@ -147,7 +363,7 @@
 <h3 id="vSphere"><a href="#vSphere" class="headerlink" title="vSphere"></a><strong>vSphere</strong></h3><p><a target="_blank" rel="noopener" href="https://docs.vmware.com/en/VMware-vSphere/index.html">https://docs.vmware.com/en/VMware-vSphere/index.html</a></p>
 <p><strong>vSphere由ESXi和vCenter Server组成</strong></p>
 <p>ESXi: VMware <em>ESXi</em> (formerly ESX) is an enterprise-class, type-1 hypervisor developed by VMware for deploying and serving virtual computers. </p>
-<p><img src="https://docs.vmware.com/en/VMware-vSphere/images/GUID-5EB66614-1EE8-4F39-8C8B-1E97EEE76791-high.png" alt="img"></p>
+<p><img src="https://docs.vmware.com/en/VMware-vSphere/images/GUID-5EB66614-1EE8-4F39-8C8B-1E97EEE76791-high.png" srcset="/img/loading.gif" lazyload alt="img"></p>
 <p><strong>例</strong>：vCenter管理多台服务器<strong>（对）</strong></p>
 <h3 id="iSCSI-x2F-ˈaɪskvzi-x2F-Internet-Small-Computer-Systems-Interface"><a href="#iSCSI-x2F-ˈaɪskvzi-x2F-Internet-Small-Computer-Systems-Interface" class="headerlink" title="iSCSI &#x2F;ˈaɪskʌzi&#x2F; (Internet Small Computer Systems Interface)"></a>iSCSI <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Help:IPA/English">&#x2F;ˈaɪskʌzi&#x2F;</a> (<em>Internet Small Computer Systems Interface</em>)</h3><p>vCenter Server提供了很多适应现代数据中心的高级特性：</p>
 <ol>
@@ -166,25 +382,25 @@
 <h3 id="vSphere的安装"><a href="#vSphere的安装" class="headerlink" title="vSphere的安装"></a><strong>vSphere的安装</strong></h3><p><strong>ESXi iSCSI的配置</strong></p>
 <ol>
 <li><p>在VMware Workstation的虚拟网络编辑器中，添加vmnet2虚拟网络，类型为仅主机模式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将vmnet1、vmnet2、vmnet8的网段分别设置为192.168.100.0/24、192.168.200.0/24、192.168.80.0/24。</span><br></pre></td></tr></table></figure>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dns">将vmnet1、vmnet2、vmnet8的网段分别设置为<span class="hljs-number">192.168.100.0</span>/<span class="hljs-number">24、192.168.200</span>.<span class="hljs-number">0/24、192.168</span>.<span class="hljs-number">80</span>.<span class="hljs-number">0</span>/<span class="hljs-number">24</span>。<br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>创建VMware ESXi虚拟机，内存为4GB，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为虚拟机配置3个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">为虚拟机配置3个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。<br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>安装VMware ESXi 5.5，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将管理网络的IP地址配置为192.168.100.100（仅主机模式）</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm">将管理网络的<span class="hljs-built_in">IP</span>地址配置为<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">100</span>.<span class="hljs-number">100</span>（仅主机模式）<br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>使用vSphere Client连接到ESXi，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">添加虚拟机端口组ForVM，创建标准交换机，绑定vmnic1网卡。</span><br></pre></td></tr></table></figure>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gcode">添加虚拟机端口组ForVM，创建标准交换机，绑定vm<span class="hljs-symbol">nic1</span>网卡。<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>添加VMkernel端口，名称为iSCSI，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建标准交换机，绑定vmnic2网卡，配置IP地址192.168.200.100。</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs armasm">创建标准交换机，绑定vmnic2网卡，配置<span class="hljs-built_in">IP</span>地址<span class="hljs-number">192</span>.<span class="hljs-number">168</span>.<span class="hljs-number">200</span>.<span class="hljs-number">100</span>。<br></code></pre></td></tr></table></figure></li>
 </ol>
 <ol start="6">
 <li><p>在本机安装的Starwind中创建一个20GB的iSCSI目标。</p>
@@ -235,152 +451,361 @@
 <p>处勾选“打开 vSphere HA”，点击确定。</p>
 <h3 id="vSphere的安装（30分最后大题）"><a href="#vSphere的安装（30分最后大题）" class="headerlink" title="vSphere的安装（30分最后大题）"></a>vSphere的安装（30分最后大题）</h3><p>实验指导书所有的<u>网络拓扑图</u>（十几分）<u>步骤</u>（十几分）（共4网络）（1.1~2.6）</p>
 <p><strong>一、安装 ESXi 服务器</strong></p>
-<p><img src="/img/image-20220614202336908.png" alt="image-20220614202336908"></p>
+<p><img src="/img/image-20220614202336908.png" srcset="/img/loading.gif" lazyload alt="image-20220614202336908"></p>
 <p><strong>二、管理 VMware 虚拟网络</strong></p>
-<p><img src="/img/image-20220614202358585.png" alt="image-20220614202358585"></p>
+<p><img src="/img/image-20220614202358585.png" srcset="/img/loading.gif" lazyload alt="image-20220614202358585"></p>
 <p><strong>三、配置 iSCSI 目标服务器</strong></p>
-<p><img src="/img/image-20220614202418845.png" alt="image-20220614202418845"></p>
+<p><img src="/img/image-20220614202418845.png" srcset="/img/loading.gif" lazyload alt="image-20220614202418845"></p>
 <p><strong>四、配置 ESXi 使用 iSCSI 共享存储</strong></p>
-<p><img src="/img/image-20220614202438030.png" alt="image-20220614202438030"></p>
+<p><img src="/img/image-20220614202438030.png" srcset="/img/loading.gif" lazyload alt="image-20220614202438030"></p>
 <p><strong>五、安装 vCenter Server</strong></p>
-<p><img src="/img/image-20220614202456913.png" alt="image-20220614202456913"></p>
+<p><img src="/img/image-20220614202456913.png" srcset="/img/loading.gif" lazyload alt="image-20220614202456913"></p>
 <p><strong>ESXi iSCSI的配置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1) 在VMware Workstation的虚拟网络编辑器中，添加vmnet2虚拟网络，类型为仅主机模式。将vmnet1、vmnet2、	vmnet8的网段分别设置为192.168.100.0/24、192.168.200.0/24、192.168.80.0/24。</span><br><span class="line">2) 创建VMware ESXi虚拟机，内存为4GB，为虚拟机配置3个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。</span><br><span class="line">3) 安装VMware ESXi 5.5，将管理网络的IP地址配置为192.168.100.100（仅主机模式）</span><br><span class="line">4) 使用vSphere Client连接到ESXi，添加虚拟机端口组ForVM，创建标准交换机，绑定vmnic1网卡。</span><br><span class="line">5) 添加VMkernel端口，名称为iSCSI，创建标准交换机，绑定vmnic2网卡，配置IP地址192.168.200.100。</span><br><span class="line">6) 在本机安装的Starwind中创建一个20GB的iSCSI目标。</span><br><span class="line">7) 在ESXi中添加iSCSI软件适配器，绑定VMkernel端口iSCSI，使用动态方式添加iSCSI目标服务器。</span><br><span class="line">8) 在ESXi中添加存储器，使用新发现的iSCSI目标，格式化为VMFS-5文件系统，使用全部空间，存储名称为iSCSI-	Starwind。</span><br><span class="line">9) 将CentOS的安装光盘ISO上传到存储iSCSI-Starwind。</span><br><span class="line">10) 在ESXi中创建虚拟机CentOS，放在存储iSCSI-Starwind上，内存为1GB。安装操作系统，将IP地址配置为	192.168.80.200/24，安装完成后，从本机ping虚拟机CentOS的IP地址。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">1</span>) 在VMware Workstation的虚拟网络编辑器中，添加vmnet2虚拟网络，类型为仅主机模式。将vmnet1、vmnet2、	vmnet8的网段分别设置为<span class="hljs-number">192.168.100.0</span>/<span class="hljs-number">24</span>、<span class="hljs-number">192.168.200.0</span>/<span class="hljs-number">24</span>、<span class="hljs-number">192.168.80.0</span>/<span class="hljs-number">24</span>。<br><span class="hljs-attribute">2</span>) 创建VMware ESXi虚拟机，内存为<span class="hljs-number">4</span>GB，为虚拟机配置<span class="hljs-number">3</span>个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。<br><span class="hljs-attribute">3</span>) 安装VMware ESXi <span class="hljs-number">5</span>.<span class="hljs-number">5</span>，将管理网络的IP地址配置为<span class="hljs-number">192.168.100.100</span>（仅主机模式）<br><span class="hljs-attribute">4</span>) 使用vSphere Client连接到ESXi，添加虚拟机端口组ForVM，创建标准交换机，绑定vmnic1网卡。<br><span class="hljs-attribute">5</span>) 添加VMkernel端口，名称为iSCSI，创建标准交换机，绑定vmnic2网卡，配置IP地址<span class="hljs-number">192.168.200.100</span>。<br><span class="hljs-attribute">6</span>) 在本机安装的Starwind中创建一个<span class="hljs-number">20</span>GB的iSCSI目标。<br><span class="hljs-attribute">7</span>) 在ESXi中添加iSCSI软件适配器，绑定VMkernel端口iSCSI，使用动态方式添加iSCSI目标服务器。<br><span class="hljs-attribute">8</span>) 在ESXi中添加存储器，使用新发现的iSCSI目标，格式化为VMFS-<span class="hljs-number">5</span>文件系统，使用全部空间，存储名称为iSCSI-	Starwind。<br><span class="hljs-attribute">9</span>) 将CentOS的安装光盘ISO上传到存储iSCSI-Starwind。<br><span class="hljs-attribute">10</span>) 在ESXi中创建虚拟机CentOS，放在存储iSCSI-Starwind上，内存为<span class="hljs-number">1</span>GB。安装操作系统，将IP地址配置为	<span class="hljs-number">192.168.80.200</span>/<span class="hljs-number">24</span>，安装完成后，从本机ping虚拟机CentOS的IP地址。<br><br></code></pre></td></tr></table></figure>
 
 
 
 <h3 id="KVM"><a href="#KVM" class="headerlink" title="KVM"></a><strong>KVM</strong></h3><p>类似VMware workstation，可以虚拟化安装windows也可以装Linux</p>
 <h3 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a><strong>OpenStack</strong></h3><p><strong>Keystone&#x2F;Nova&#x2F;Glance&#x2F;Cinder&#x2F;Swift&#x2F;Neutron</strong></p>
 <p>Keystone</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为OpenStack上的所有服务提供身份认证和授权</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">为OpenStack上的所有服务提供身份认证和授权<br></code></pre></td></tr></table></figure>
 
 <p>Nova</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是OpenStack的控制器，支持OpenStack云内的实例的生命周期所需的所有活动处理。Nova作为管理平台管理着OpenStack云里的计算资源和扩展需求。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">是OpenStack的控制器，支持OpenStack云内的实例的生命周期所需的所有活动处理。Nova作为管理平台管理着OpenStack云里的计算资源和扩展需求。<br></code></pre></td></tr></table></figure>
 
 <p>Glance</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供了一个虚拟磁盘镜像的目录和存储仓库，可以提供对虚拟机镜像的存储和检索。这些磁盘镜像广泛应用于Nova组件之中。Glance能进行多个数据中心的镜像管理和租户私有镜像管理。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">提供了一个虚拟磁盘镜像的目录和存储仓库，可以提供对虚拟机镜像的存储和检索。这些磁盘镜像广泛应用于Nova组件之中。Glance能进行多个数据中心的镜像管理和租户私有镜像管理。<br></code></pre></td></tr></table></figure>
 
 <p>Cinder</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cinder组件为虚拟机实例提供了块存储设备，同时为管理存储设备提供了一整套方法</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">Cinder组件为虚拟机实例提供了块存储设备，同时为管理存储设备提供了一整套方法<br></code></pre></td></tr></table></figure>
 
 <p>Swift</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供对象存储服务，允许对文件进行存储或者检索，但不通过挂载文件服务器上目录的方式来实现。Swift为OpenStack提供了分布式的、最终一致的虚拟对象存储。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">提供对象存储服务，允许对文件进行存储或者检索，但不通过挂载文件服务器上目录的方式来实现。Swift为OpenStack提供了分布式的、最终一致的虚拟对象存储。<br></code></pre></td></tr></table></figure>
 
 <p>Neutron</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是OpenStack中提供网络服务的核心组件，基于软件定义网络的思想，实现软件化的网络资源管理，在实现上充分利用了Linux操作系统中各种网络相关技术，支持第三方插件。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">是OpenStack中提供网络服务的核心组件，基于软件定义网络的思想，实现软件化的网络资源管理，在实现上充分利用了Linux操作系统中各种网络相关技术，支持第三方插件。<br></code></pre></td></tr></table></figure>
 
 <p>OpenStack的各个服务之间通过统一的REST风格的API调用，实现系统的<strong>松耦合</strong></p>
 <h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a><strong>容器</strong></h3><p>Docker：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">容器container、镜像image、仓库repository</span><br></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mel">容器<span class="hljs-keyword">container</span>、镜像<span class="hljs-keyword">image</span>、仓库repository<br></code></pre></td></tr></table></figure>
 
 <p>Docker使用沙箱(sandbox)机制，用的namespace实现应用系统之间的隔离</p>
 <p>Docker是开源项目</p>
 <h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>Docker</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">是一个开源的应用容器引擎，开发者可以打包他们的应用及依赖(dependency)到一个可移植的容器中，发布到流行的Linux机器上，也可实现虚拟化。</span><br><span class="line">Docker is an open source containerization platform. It enables developers to package applications into containers—standardized executable components combining application source code with the operating system (OS) libraries and dependencies required to run that code in any environment. Containers simplify delivery of distributed applications, and have become increasingly popular as organizations shift to cloud-native development and hybrid multicloud environments.</span><br></pre></td></tr></table></figure>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver">是一个开源的应用容器引擎，开发者可以打包他们的应用及依赖(dependency)到一个可移植的容器中，发布到流行的Linux机器上，也可实现虚拟化。<br>Docker is <span class="hljs-keyword">an</span> <span class="hljs-built_in">open</span> source containerization <span class="hljs-built_in">platform</span>. It enables developers <span class="hljs-built_in">to</span> package applications <span class="hljs-keyword">into</span> containers—standardized executable components combining application source code <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> operating <span class="hljs-keyword">system</span> (OS) libraries <span class="hljs-keyword">and</span> dependencies required <span class="hljs-built_in">to</span> run that code <span class="hljs-keyword">in</span> <span class="hljs-keyword">any</span> environment. Containers simplify delivery <span class="hljs-keyword">of</span> distributed applications, <span class="hljs-keyword">and</span> have become increasingly popular <span class="hljs-keyword">as</span> organizations shift <span class="hljs-built_in">to</span> cloud-native development <span class="hljs-keyword">and</span> hybrid multicloud environments.<br></code></pre></td></tr></table></figure>
 
 <p>Kubernetes</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">是一个开源的容器集群管理系统，可以实现容器集群的</span><br><span class="line">自动化部署、自动化扩缩容量、维护等功能。</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">是一个开源的容器集群管理系统，可以实现容器集群的<br>自动化部署、自动化扩缩容量、维护等功能。<br></code></pre></td></tr></table></figure>
 
 
 
 
-      
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2022《虚拟化与云计算应用》期末复习</div>
+      <div>https://wiserdi.github.io/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/</div>
     </div>
-    <footer>
+    <div class="license-meta">
       
-        
-        
-        
-  <div class="addthis addthis_toolbox addthis_default_style">
-    
-      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-    
-    
-      <a class="addthis_button_tweet"></a>
-    
-    
-      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    
-    
-      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-    
-    <a class="addthis_counter addthis_pill_style"></a>
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Admin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月9日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
   </div>
-  <script src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/09/flume/" title="Flume 学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flume 学习笔记</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/09/PicPick-Professional-6-3-0-Multilingual/" title="PicPick Professional 6.3.0 Multilingual">
+                        <span class="hidden-mobile">PicPick Professional 6.3.0 Multilingual</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-<section id="comment">
-  <h1 class="title">Comments</h1>
-
-  
-      <div id="fb-root"></div>
-<script>
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<div class="fb-comments" data-href="https://wiserdi.github.io/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
-      
-  
-</section>
-
-</div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="as_sitesearch" value="wiserdi.github.io">
-  </form>
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
-  
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
   
-</aside>
-    <div class="clearfix"></div>
-  </div>
-  <footer id="footer" class="inner"><div class="alignleft">
+
+
+
   
-  &copy; 2022 Admin
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
   
 </div>
-<div class="clearfix"></div></footer>
+
+  </footer>
+
+  <!-- Scripts -->
   
-<script src="/js/jquery-3.4.1.min.js"></script>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
-<script src="/js/jquery.imagesloaded.min.js"></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
-<script src="/js/gallery.js"></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
 
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
+  
 <script>
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
 </script>
 
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>

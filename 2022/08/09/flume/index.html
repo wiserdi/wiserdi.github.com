@@ -1,72 +1,290 @@
-<!DOCTYPE HTML>
-<html lang="en">
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <title>Flume 学习笔记 | The World to Affluence</title>
+  <meta name="theme-color" content="#2f4154">
   <meta name="author" content="Admin">
+  <meta name="keywords" content="">
   
-  <meta name="description" content="概述Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。
+    <meta name="description" content="概述Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。  实时读取服务器上的日志数据，将数据写入到HDFS Flume的优点 可以和任意存储进程集成  输入的数据速率大于写入目的的存储速率，Flume会进行缓冲，减">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flume 学习笔记">
+<meta property="og:url" content="https://wiserdi.github.io/2022/08/09/flume/index.html">
+<meta property="og:site_name" content="The World to Affluence">
+<meta property="og:description" content="概述Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。  实时读取服务器上的日志数据，将数据写入到HDFS Flume的优点 可以和任意存储进程集成  输入的数据速率大于写入目的的存储速率，Flume会进行缓冲，减">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wiserdi.github.io/img/DevGuide_image00.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/FFFFFF-t_70_pic_center.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/pic_center-16511116964952.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/t_70_pic_center.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/UserGuide_image03.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/UserGuide_image02.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/UserGuide_image01.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/t_70_pic_center-16511166368648.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220428115518751-165111812064810.png">
+<meta property="og:image" content="https://wiserdi.github.io/img/image-20220428145440550.png">
+<meta property="article:published_time" content="2022-08-09T12:53:54.000Z">
+<meta property="article:modified_time" content="2022-08-09T17:56:07.476Z">
+<meta property="article:author" content="Admin">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://wiserdi.github.io/img/DevGuide_image00.png">
+  
+  
+  
+  <title>Flume 学习笔记 - The World to Affluence</title>
 
-实时读取服务器上的日志数据，将数据写入到HDFS
-Flu">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
-  <meta property="og:title" content="Flume 学习笔记"/>
-  <meta property="og:site_name" content="The World to Affluence"/>
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"wiserdi.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
 
   
-    <meta property="og:image" content=""/>
-  
-
-  <link rel="shortcut icon" href="/favicon.png">
-  
-  
-<link rel="stylesheet" href="/css/style.css">
-
-  <!--[if lt IE 9]><script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script><![endif]-->
-  
-
 <meta name="generator" content="Hexo 6.2.0"></head>
 
 
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">The World to Affluence</a></h1>
-  <h2><a href="/"></a></h2>
-</div>
-<nav id="main-nav" class="alignright">
-  <ul>
-    
-      <li><a href="/null">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper"><article id="post-flume" class="h-entry post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time class="dt-published" datetime="2022-08-09T12:53:54.000Z"><a href="/2022/08/09/flume/">2022-08-09</a></time>
-      
-      
-  
-    <h1 class="p-name title" itemprop="headline name">Flume 学习笔记</h1>
   
 
-    </header>
-    <div class="e-content entry" itemprop="articleBody">
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Fluid</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Flume 学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-08-09 20:53" pubdate>
+          2022年8月9日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          148 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
       
-        <h1 id><a href="#" class="headerlink" title></a></h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。</p>
-<p><img src="/img/DevGuide_image00.png" alt="Agent component diagram"></p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flume 学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id><a href="#" class="headerlink" title></a></h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。</p>
+<p><img src="/img/DevGuide_image00.png" srcset="/img/loading.gif" lazyload alt="Agent component diagram"></p>
 <p>实时读取服务器上的日志数据，将数据写入到HDFS</p>
 <h3 id="Flume的优点"><a href="#Flume的优点" class="headerlink" title="Flume的优点"></a>Flume的优点</h3><ol>
 <li><p>可以和任意存储进程集成</p>
@@ -85,69 +303,69 @@ Flu">
 <p>Memory Channel : 基于内存的，你不关心日志是否丢失<br>JDBC Channel<br>Kafka Channel<br>File Channel ：保证数据不丢失，写入channel的数据会被持久化<br>Spillable Memory Channel<br>Pseudo Transaction Channel<br>Custom Channel</p>
 <h2 id="安装部署"><a href="#安装部署" class="headerlink" title="安装部署"></a>安装部署</h2><ol>
 <li><p>下载地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://flume.apache.org/download.html</span><br></pre></td></tr></table></figure>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">https:</span>//flume.apache<span class="hljs-meta">.org</span>/download.html<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>上传到&#x2F;opt&#x2F;software下</p>
 </li>
 <li><p>解压缩，记得切换到hadoop用户</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xzvf apache-flume-1.9.0-bin.tar.gz -C /opt/module/</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">tar</span> -xzvf apache-flume-<span class="hljs-number">1</span>.<span class="hljs-number">9</span>.<span class="hljs-number">0</span>-bin.tar.gz -C /opt/module/<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>做软连接</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s apache-flume-1.9.0-bin flume</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">ln</span> -s apache-flume-<span class="hljs-number">1</span>.<span class="hljs-number">9</span>.<span class="hljs-number">0</span>-bin flume<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>移除有冲突的jar包</p>
 <p>将guava-11.0.2.jar包移除，或者改名也行</p>
 <p>因为和hadoop下的冲突</p>
 <p>&#x2F;opt&#x2F;module&#x2F;hadoop&#x2F;share&#x2F;hadoop&#x2F;common&#x2F;lib&#x2F;guava-27.0-jre.jar</p>
 <p>可以把上面的新的cp过来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /opt/module/hadoop/share/hadoop/common/lib/guava-27.0-jre.jar /opt/module/flume/lib/</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">cp <span class="hljs-regexp">/opt/m</span>odule<span class="hljs-regexp">/hadoop/</span>share<span class="hljs-regexp">/hadoop/</span>common<span class="hljs-regexp">/lib/gu</span>ava-<span class="hljs-number">27.0</span>-jre.jar <span class="hljs-regexp">/opt/m</span>odule<span class="hljs-regexp">/flume/</span>lib/<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="案例一-监控本地端口"><a href="#案例一-监控本地端口" class="headerlink" title="案例一: 监控本地端口"></a>案例一: 监控本地端口</h2><p>NetCat TCP</p>
 <p>使用Flume监听一个端口，收集这个端口的数据，打印到控制台，或者输出到文件</p>
 <ol>
 <li><p>下载安装netcat</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y nc</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">sudo yum <span class="hljs-keyword">install</span> -y nc<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置flume的配置文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir jobs</span><br><span class="line">vi flume-nc.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-built_in">mkdir</span> jobs<br><span class="hljs-keyword">vi</span> flume-nc.<span class="hljs-keyword">conf</span><br></code></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># Name the components on this agent</span><br><span class="line"># a1 是agent的名字，随便起，后面启动flume的时候要对应这个名字</span><br><span class="line"># r1 是source的名字</span><br><span class="line">a1.sources = r1</span><br><span class="line"># k1是sink的名字</span><br><span class="line">a1.sinks = k1</span><br><span class="line"># c1是channel的名字</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line"># 配置source</span><br><span class="line"># r1的类型是netcat</span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line"># 绑定的ip地址是localhost</span><br><span class="line">a1.sources.r1.bind = localhost</span><br><span class="line"># 绑定的端口是44444</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line"># 配置 sink</span><br><span class="line"># sink的类型是日志类型</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line"># 把 source和sink 跟channel 连接起来</span><br><span class="line"># r1的channel是c1</span><br><span class="line">a1.sources.r1.channels = c1 </span><br><span class="line"># k1的channel是c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># Name the components on this agent</span><br><span class="hljs-comment"># a1 是agent的名字，随便起，后面启动flume的时候要对应这个名字</span><br><span class="hljs-comment"># r1 是source的名字</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-comment"># k1是sink的名字</span><br><span class="hljs-attr">a1.sinks</span> = k1<br><span class="hljs-comment"># c1是channel的名字</span><br><span class="hljs-attr">a1.channels</span> = c1<br><br><span class="hljs-comment"># Describe/configure the source</span><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># r1的类型是netcat</span><br><span class="hljs-attr">a1.sources.r1.type</span> = netcat<br><span class="hljs-comment"># 绑定的ip地址是localhost</span><br><span class="hljs-attr">a1.sources.r1.bind</span> = localhost<br><span class="hljs-comment"># 绑定的端口是44444</span><br><span class="hljs-attr">a1.sources.r1.port</span> = <span class="hljs-number">44444</span><br><br><span class="hljs-comment"># Describe the sink</span><br><span class="hljs-comment"># 配置 sink</span><br><span class="hljs-comment"># sink的类型是日志类型</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = logger<br><br><span class="hljs-comment"># Use a channel which buffers events in memory</span><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># Bind the source and sink to the channel</span><br><span class="hljs-comment"># 把 source和sink 跟channel 连接起来</span><br><span class="hljs-comment"># r1的channel是c1</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1 <br><span class="hljs-comment"># k1的channel是c1</span><br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>检查端口是否被占用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo netstat -nlp | grep 44444</span><br><span class="line"></span><br><span class="line">tcp6       0      0 127.0.0.1:44444         :::*                    LISTEN      22600/java  </span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">sudo</span> netstat -nlp | grep <span class="hljs-number">44444</span><br><br><span class="hljs-attribute">tcp6</span>       <span class="hljs-number">0</span>      <span class="hljs-number">0</span> <span class="hljs-number">127.0.0.1:44444</span>         :::*                    LISTEN      <span class="hljs-number">22600</span>/java  <br></code></pre></td></tr></table></figure>
 
 <p>上面就是44444端口被一个java进程占用，进程id是22600</p>
 <p>杀掉进程</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kill 22600</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kill</span> <span class="hljs-number">22600</span><br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>启动flume</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$ bin/flume-ng agent --conf conf --conf-file jobs/flume-nc.conf --name 	a1 -Dflume.root.logger=INFO,console</span><br><span class="line"></span><br><span class="line">--conf conf 配置文件在什么地方，跟的是个目录</span><br><span class="line">--conf-file flume本次运行的配置文件(source sink channel的配置)</span><br><span class="line">--name agent的名字</span><br><span class="line">-Dflume.root.logger=INFO,console 运行时参数flume.root.logger修改为INFO,console，让日志在控制台输出，输出的级别是INFO，日志级别DEBUG INFO WARN ERROR</span><br><span class="line"></span><br><span class="line">简写</span><br><span class="line">bin/flume-ng agent -c conf -n a1 -f jobs/flume-nc.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros">$ bin/flume-ng agent --conf conf --conf-file jobs/flume-nc.conf --name 	a1 -Dflume.root.<span class="hljs-attribute">logger</span>=INFO,console<br><br>--conf conf 配置文件在什么地方，跟的是个目录<br>--conf-file flume本次运行的配置文件(source sink channel的配置)<br>--name agent的名字<br>-Dflume.root.<span class="hljs-attribute">logger</span>=INFO,console 运行时参数flume.root.logger修改为INFO,console，让日志在控制台输出，输出的级别是INFO，日志级别<span class="hljs-built_in">DEBUG</span> <span class="hljs-built_in">INFO</span> WARN <span class="hljs-built_in">ERROR</span><br><br>简写<br>bin/flume-ng agent -c conf -n a1 -f jobs/flume-nc.conf<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>启动nc发送数据</p>
 <p>打开另外一个远程连接窗口执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc localhost 44444</span><br></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">nc</span> localhost <span class="hljs-number">44444</span><br></code></pre></td></tr></table></figure>
 
 <p>输入内容</p>
 <p>在flume运行的窗口就会收到信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:95)] Event: &#123; headers:&#123;&#125; body: 68 65 6C 6C 6F                                  hello &#125;</span><br><span class="line"></span><br><span class="line">2022-04-21 22:59:31,374 (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:95)] Event: &#123; headers:&#123;&#125; body: E4 BD 95 E5 85 B5 E5 AE B6                      ......... &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-attr">[INFO - org.apache.flume.sink.LoggerSink.process(LoggerSink.java:95)]</span> Event: &#123; headers:&#123;&#125; <span class="hljs-selector-tag">body</span>: <span class="hljs-number">68</span> <span class="hljs-number">65</span> <span class="hljs-number">6</span>C <span class="hljs-number">6</span>C <span class="hljs-number">6</span>F                                  hello &#125;<br><br><span class="hljs-number">2022</span>-<span class="hljs-number">04</span>-<span class="hljs-number">21</span> <span class="hljs-number">22</span>:<span class="hljs-number">59</span>:<span class="hljs-number">31</span>,<span class="hljs-number">374</span> (SinkRunner-PollingRunner-DefaultSinkProcessor) [INFO - org.apache.flume.sink.LoggerSink.<span class="hljs-built_in">process</span>(LoggerSink.java:<span class="hljs-number">95</span>)] Event: &#123; headers:&#123;&#125; <span class="hljs-selector-tag">body</span>: E4 BD <span class="hljs-number">95</span> E5 <span class="hljs-number">85</span> B5 E5 AE B6                      ......... &#125;<br><br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="案例二：实时监控单个文件，保存到hdfs中"><a href="#案例二：实时监控单个文件，保存到hdfs中" class="headerlink" title="案例二：实时监控单个文件，保存到hdfs中"></a>案例二：实时监控单个文件，保存到hdfs中</h2><ol>
 <li><p>配置下hdfs</p>
 <p>之前的服务器已经配好了&#x2F;etc&#x2F;profiled.d&#x2F;hadoop_env.sh</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># JAVA_HOME</span><br><span class="line">export JAVA_HOME=/opt/module/jdk1.8.0_202</span><br><span class="line">export PATH=$PATH:$JAVA_HOME/bin</span><br><span class="line"></span><br><span class="line"># HADOOP_HOME</span><br><span class="line">export HADOOP_HOME=/opt/module/hadoop</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/bin</span><br><span class="line">export PATH=$PATH:$HADOOP_HOME/sbin</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># JAVA_HOME</span><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">JAVA_HOME</span>=/opt/module/jdk1.8.0_202<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$JAVA_HOME/bin<br><br><span class="hljs-comment"># HADOOP_HOME</span><br><span class="hljs-built_in">export</span> <span class="hljs-attribute">HADOOP_HOME</span>=/opt/module/hadoop<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$HADOOP_HOME/bin<br><span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=<span class="hljs-variable">$PATH</span>:$HADOOP_HOME/sbin<br><br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>创建flume配置文件</p>
 <p>jobs&#x2F;flume-file-hdfs.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line"># 命令是tail -F</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1<br><span class="hljs-attr">a1.sinks</span> = k1<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source 一个可执行的命令</span><br><span class="hljs-attr">a1.sources.r1.type</span> = exec<br><span class="hljs-comment"># 命令是tail -F</span><br><span class="hljs-attr">a1.sources.r1.command</span> = tail -F /tmp/njust.log<br><br><span class="hljs-comment"># 配置sink</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = hdfs<br><span class="hljs-comment"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.path</span> = hdfs://hadoop201:<span class="hljs-number">8020</span>/flume/events/%y-%m-%d/%H%M<br><span class="hljs-comment"># 上传文件的前缀</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.filePrefix</span> = events-<br><span class="hljs-comment"># 是否应该按时间滚动文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.round</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 10分钟生成一个文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundValue</span> = <span class="hljs-number">10</span><br><span class="hljs-comment"># 定义时间单位</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundUnit</span> = minute<br><span class="hljs-comment"># 使用本地时间戳</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.useLocalTimeStamp</span> = <span class="hljs-literal">true</span><br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1<br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bin/flume-ng agent -c conf -n a1 -f jobs/flu-file-hdfs.conf </span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/flume-ng agent -c conf -n a1 -f <span class="hljs-built_in">jobs</span>/flu-file-hdfs.conf</span> <br></code></pre></td></tr></table></figure>
 
 <p>往&#x2F;tmp&#x2F;njust.log里面加东西</p>
 <p> 观察hdfs的目录</p>
@@ -156,7 +374,7 @@ Flu">
 <h2 id="案例三-实时监控目录"><a href="#案例三-实时监控目录" class="headerlink" title="案例三: 实时监控目录"></a>案例三: 实时监控目录</h2><p>只监控目录下的新文件，.complete就不管了</p>
 <ol>
 <li><p>配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source spooldir 监控目录的source</span><br><span class="line">a1.sources.r1.type = spooldir</span><br><span class="line"># 配置监控目录</span><br><span class="line">a1.sources.r1.spoolDir = /tmp/hadoop</span><br><span class="line"># 是否添加文件绝对路径当文件头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line"># 文件上传好以后，会被改名，后缀是什么</span><br><span class="line">a1.sources.r1.fileSuffix = .COMPLETED</span><br><span class="line"># includePattern 可以用正则表达式来配置哪些文件名的文件要上传</span><br><span class="line"># ignorePattern 哪些忽略</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1<br><span class="hljs-attr">a1.sinks</span> = k1<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source spooldir 监控目录的source</span><br><span class="hljs-attr">a1.sources.r1.type</span> = spooldir<br><span class="hljs-comment"># 配置监控目录</span><br><span class="hljs-attr">a1.sources.r1.spoolDir</span> = /tmp/hadoop<br><span class="hljs-comment"># 是否添加文件绝对路径当文件头</span><br><span class="hljs-attr">a1.sources.r1.fileHeader</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 文件上传好以后，会被改名，后缀是什么</span><br><span class="hljs-attr">a1.sources.r1.fileSuffix</span> = .COMPLETED<br><span class="hljs-comment"># includePattern 可以用正则表达式来配置哪些文件名的文件要上传</span><br><span class="hljs-comment"># ignorePattern 哪些忽略</span><br><br><br><br><span class="hljs-comment"># 配置sink</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = hdfs<br><span class="hljs-comment"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.path</span> = hdfs://hadoop201:<span class="hljs-number">8020</span>/flume/events/%y-%m-%d/%H%M<br><span class="hljs-comment"># 上传文件的前缀</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.filePrefix</span> = events-<br><span class="hljs-comment"># 是否应该按时间滚动文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.round</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 10分钟生成一个文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundValue</span> = <span class="hljs-number">10</span><br><span class="hljs-comment"># 定义时间单位</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundUnit</span> = minute<br><span class="hljs-comment"># 使用本地时间戳</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.useLocalTimeStamp</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 多久生成一个新文件</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.hdfs.rollInterval</span> = <span class="hljs-number">60</span><br><span class="hljs-comment"># 一次写100个Event到hdfs</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize</span> = <span class="hljs-number">100</span><br><br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1<br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 
 
 </li>
@@ -167,32 +385,32 @@ Flu">
 <p>Taildir source 适用监听多个追加文件，而且支持断点续传</p>
 <ol>
 <li><p>配置flume-taildir-hdfs.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source taildir 监控目录下的多个文件追加</span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.positionFile = /tmp/hadoop/flume/taildir_position.json</span><br><span class="line"># 指示有几个文件组，中间用空格分开</span><br><span class="line">a1.sources.r1.filegroups = f1 f2</span><br><span class="line"># 定义f1文件组的文件，可以是单个文件</span><br><span class="line">a1.sources.r1.filegroups.f1 = /tmp/hadoop/test1/example.log</span><br><span class="line">a1.sources.r1.headers.f1.headerKey1 = value1</span><br><span class="line">a1.sources.r1.filegroups.f2 = /tmp/hadoop/test2/.*log.*</span><br><span class="line">a1.sources.r1.headers.f2.headerKey1 = value2</span><br><span class="line">a1.sources.r1.headers.f2.headerKey2 = value2-2</span><br><span class="line"># 日志里面用文件的绝对路径做头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line">a1.sources.ri.maxBatchCount = 1000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1<br><span class="hljs-attr">a1.sinks</span> = k1<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source taildir 监控目录下的多个文件追加</span><br><span class="hljs-attr">a1.sources.r1.type</span> = TAILDIR<br><span class="hljs-attr">a1.sources.r1.positionFile</span> = /tmp/hadoop/flume/taildir_position.json<br><span class="hljs-comment"># 指示有几个文件组，中间用空格分开</span><br><span class="hljs-attr">a1.sources.r1.filegroups</span> = f1 f2<br><span class="hljs-comment"># 定义f1文件组的文件，可以是单个文件</span><br><span class="hljs-attr">a1.sources.r1.filegroups.f1</span> = /tmp/hadoop/test1/example.log<br><span class="hljs-attr">a1.sources.r1.headers.f1.headerKey1</span> = value1<br><span class="hljs-attr">a1.sources.r1.filegroups.f2</span> = /tmp/hadoop/test2/.*log.*<br><span class="hljs-attr">a1.sources.r1.headers.f2.headerKey1</span> = value2<br><span class="hljs-attr">a1.sources.r1.headers.f2.headerKey2</span> = value2-<span class="hljs-number">2</span><br><span class="hljs-comment"># 日志里面用文件的绝对路径做头</span><br><span class="hljs-attr">a1.sources.r1.fileHeader</span> = <span class="hljs-literal">true</span><br><span class="hljs-attr">a1.sources.ri.maxBatchCount</span> = <span class="hljs-number">1000</span><br><br><br><span class="hljs-comment"># 配置sink</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = hdfs<br><span class="hljs-comment"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.path</span> = hdfs://hadoop201:<span class="hljs-number">8020</span>/flume/events/%y-%m-%d/%H%M<br><span class="hljs-comment"># 上传文件的前缀</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.filePrefix</span> = events-<br><span class="hljs-comment"># 是否应该按时间滚动文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.round</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 10分钟生成一个文件夹</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundValue</span> = <span class="hljs-number">10</span><br><span class="hljs-comment"># 定义时间单位</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.roundUnit</span> = minute<br><span class="hljs-comment"># 使用本地时间戳</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.useLocalTimeStamp</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 多久生成一个新文件</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.hdfs.rollInterval</span> = <span class="hljs-number">60</span><br><span class="hljs-comment"># 一次写100个Event到hdfs</span><br><span class="hljs-attr">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize</span> = <span class="hljs-number">100</span><br><br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1<br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="Flume-事务"><a href="#Flume-事务" class="headerlink" title="Flume 事务"></a>Flume 事务</h2><p>Flume agent中间有三个组件，source  channel  sink，里面流的东西是event ，event由head和body组成</p>
 <p>事务分两个部分</p>
 <h3 id="put事务"><a href="#put事务" class="headerlink" title="put事务"></a>put事务</h3><p>source -&gt; channel的部分 </p>
-<p><img src="/img/FFFFFF-t_70_pic_center.png"></p>
+<p><img src="/img/FFFFFF-t_70_pic_center.png" srcset="/img/loading.gif" lazyload></p>
 <p>首先Source会采集一批数据，封装为event，缓存达到batch data的最大容量时（batch data的大小取决于配置参数batch size的值），Flume开启事务：</p>
 <p>doPut（）:将这批event写入到临时缓冲区putList，putList是一个LinkedBlockingDeque<br>，大小取决于配置Channel的参数transaction capacity的大小。</p>
 <p>doCommit（）:检查channel内存队列是否足够合并，内存队列的大小由Channel的capacity参数控制， Channel的容量内存队列足够的时候，提交event成功。</p>
 <p>doRollback（）: channel内存队列空间不够时，回滚，这里会将整个putList中的数据都扔掉，然后给Source返回一个ChannelException异常，告诉Source数据没有采集上。Source会重新采集这批数据，然后开启新的事务。</p>
 <h3 id="Take事务"><a href="#Take事务" class="headerlink" title="Take事务"></a>Take事务</h3><p>channel -&gt; sink </p>
-<p><img src="/img/pic_center-16511116964952.png"></p>
+<p><img src="/img/pic_center-16511116964952.png" srcset="/img/loading.gif" lazyload></p>
 <p>doTake（）：sink将数据剪切取到临时缓冲区takeList，takeList也是一个LinkedBlockingDeque，<br>大小取决于配置Channel的参数transaction capacity的大小，同时也拷贝一份放入写往HDFS的IO流中。</p>
 <p>doCommit（）：如果event全部发送成功，就清除takeList。</p>
 <p>doRollback（）：如果发送过程中出现异常，回滚，将takeList中的全部event归还给Channel。这个操作可能导致数据重复,如果已经写入一半的event到了HDFS，但是回滚时会向channel归还整个takeList中的event，后续再次开启事务向HDFS写入这批event时候，就出现了数据重复。</p>
 <p>Flume的事务仅能保证两个传输阶段的数据不丢，但是如果channel选用的是memory channel，那么由于memory channel将数据存储在内存中，一旦channel发生异常，数据仍然可能丢失，但采用File channel时，数据传输到channel时会落盘，再结合事务，会保证整体上数据不会丢失，但是仍然可能会在take事务阶段发生数据重复。</p>
-<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/img/t_70_pic_center.png"></p>
+<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/img/t_70_pic_center.png" srcset="/img/loading.gif" lazyload></p>
 <ol>
 <li><p>Flume Channel Selectors ( 3 种 )</p>
 <p>作用就是选出event该去哪个channel，默认就是replicating（复制）</p>
 <p>Replicating Channel Selector</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1 c2 c3</span><br><span class="line"># 定义channel的选择器是复制, 将source来的一个event  c1 c2 c3都复制发一份</span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line"># 定义了3个channel</span><br><span class="line">a1.sources.r1.channels = c1 c2 c3</span><br><span class="line"># c3如果数据出问题，不管，c1 c2没配置，则必须执行事务</span><br><span class="line">a1.sources.r1.selector.optional = c3</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1 c2 c3<br><span class="hljs-comment"># 定义channel的选择器是复制, 将source来的一个event  c1 c2 c3都复制发一份</span><br><span class="hljs-attr">a1.sources.r1.selector.type</span> = replicating<br><span class="hljs-comment"># 定义了3个channel</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1 c2 c3<br><span class="hljs-comment"># c3如果数据出问题，不管，c1 c2没配置，则必须执行事务</span><br><span class="hljs-attr">a1.sources.r1.selector.optional</span> = c3<br></code></pre></td></tr></table></figure>
 
 <p>Multiplexing Channel Selector</p>
 <p>会将event根据条件发到不同的channel</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1 c2 c3 c4</span><br><span class="line">a1.sources.r1.selector.type = multiplexing</span><br><span class="line">a1.sources.r1.selector.header = state</span><br><span class="line">a1.sources.r1.selector.mapping.CZ = c1</span><br><span class="line">a1.sources.r1.selector.mapping.US = c2 c3</span><br><span class="line">a1.sources.r1.selector.default = c4</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs stylus">a1<span class="hljs-selector-class">.sources</span> = r1<br>a1<span class="hljs-selector-class">.channels</span> = c1 c2 c3 c4<br>a1<span class="hljs-selector-class">.sources</span><span class="hljs-selector-class">.r1</span><span class="hljs-selector-class">.selector</span><span class="hljs-selector-class">.type</span> = multiplexing<br>a1<span class="hljs-selector-class">.sources</span><span class="hljs-selector-class">.r1</span><span class="hljs-selector-class">.selector</span><span class="hljs-selector-class">.header</span> = state<br>a1<span class="hljs-selector-class">.sources</span><span class="hljs-selector-class">.r1</span><span class="hljs-selector-class">.selector</span><span class="hljs-selector-class">.mapping</span><span class="hljs-selector-class">.CZ</span> = c1<br>a1<span class="hljs-selector-class">.sources</span><span class="hljs-selector-class">.r1</span><span class="hljs-selector-class">.selector</span><span class="hljs-selector-class">.mapping</span><span class="hljs-selector-class">.US</span> = c2 c3<br>a1<span class="hljs-selector-class">.sources</span><span class="hljs-selector-class">.r1</span><span class="hljs-selector-class">.selector</span><span class="hljs-selector-class">.default</span> = c4<br></code></pre></td></tr></table></figure></li>
 </ol>
 <p>​		Custom Channel Selector  自定义的</p>
 <p>​		implementation of the ChannelSelector interface</p>
@@ -200,10 +418,10 @@ Flu">
 <li><p>Flume Sink Processors</p>
 <p>Default Sink Processor：对应单个sink</p>
 <p>Failover Sink Processor: 维护一个有优先级的水池列表，确保 event一定会被处理（送达）,失败的会处理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">a1.sinkgroups = g1</span><br><span class="line">a1.sinkgroups.g1.sinks = k1 k2</span><br><span class="line">a1.sinkgroups.g1.processor.type = failover</span><br><span class="line"># 必配 sink优先级，数字越大优先级越高</span><br><span class="line">a1.sinkgroups.g1.processor.priority.k1 = 5</span><br><span class="line">a1.sinkgroups.g1.processor.priority.k2 = 10</span><br><span class="line">a1.sinkgroups.g1.processor.maxpenalty = 10000</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">a1.sinkgroups</span> = g1<br><span class="hljs-attr">a1.sinkgroups.g1.sinks</span> = k1 k2<br><span class="hljs-attr">a1.sinkgroups.g1.processor.type</span> = failover<br><span class="hljs-comment"># 必配 sink优先级，数字越大优先级越高</span><br><span class="hljs-attr">a1.sinkgroups.g1.processor.priority.k1</span> = <span class="hljs-number">5</span><br><span class="hljs-attr">a1.sinkgroups.g1.processor.priority.k2</span> = <span class="hljs-number">10</span><br><span class="hljs-attr">a1.sinkgroups.g1.processor.maxpenalty</span> = <span class="hljs-number">10000</span><br></code></pre></td></tr></table></figure>
 
 <p>Load balancing Sink Processor：实现负载均衡sinks</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">a1.sinkgroups = g1</span><br><span class="line">a1.sinkgroups.g1.sinks = k1 k2</span><br><span class="line">a1.sinkgroups.g1.processor.type = load_balance</span><br><span class="line">a1.sinkgroups.g1.processor.backoff = true</span><br><span class="line">a1.sinkgroups.g1.processor.selector = random</span><br></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">a1<span class="hljs-selector-class">.sinkgroups</span> = g1<br>a1<span class="hljs-selector-class">.sinkgroups</span><span class="hljs-selector-class">.g1</span><span class="hljs-selector-class">.sinks</span> = k1 k2<br>a1<span class="hljs-selector-class">.sinkgroups</span><span class="hljs-selector-class">.g1</span><span class="hljs-selector-class">.processor</span><span class="hljs-selector-class">.type</span> = load_balance<br>a1<span class="hljs-selector-class">.sinkgroups</span><span class="hljs-selector-class">.g1</span><span class="hljs-selector-class">.processor</span><span class="hljs-selector-class">.backoff</span> = true<br>a1<span class="hljs-selector-class">.sinkgroups</span><span class="hljs-selector-class">.g1</span><span class="hljs-selector-class">.processor</span><span class="hljs-selector-class">.selector</span> = random<br></code></pre></td></tr></table></figure>
 
 
 </li>
@@ -213,55 +431,55 @@ Flu">
 </ol>
 <h2 id="Flume的拓扑结构"><a href="#Flume的拓扑结构" class="headerlink" title="Flume的拓扑结构"></a>Flume的拓扑结构</h2><ol>
 <li><p>串联</p>
-<p><img src="/img/UserGuide_image03.png" alt="Two agents communicating over Avro RPC"></p>
+<p><img src="/img/UserGuide_image03.png" srcset="/img/loading.gif" lazyload alt="Two agents communicating over Avro RPC"></p>
 </li>
 </ol>
 <p>​      将多个flume按顺序连接起来，不建议串联太长，因为如果中间一个出问题，整个通道就都完了</p>
 <ol start="2">
 <li>Consolidation 合并</li>
 </ol>
-<p><img src="/img/UserGuide_image02.png" alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
+<p><img src="/img/UserGuide_image02.png" srcset="/img/loading.gif" lazyload alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
 <p>​        大多数情况用这种，工作环境，服务器会非常多，将多个服务器的数据采集汇总，给每台服务器配一个flume，然后传送到一个统一的sink去汇总处理，日志分析</p>
 <ol start="3">
 <li>Multiplexing the flow 多路复用</li>
 </ol>
-<p><img src="/img/UserGuide_image01.png" alt="A fan-out flow using a (multiplexing) channel selector"></p>
+<p><img src="/img/UserGuide_image01.png" srcset="/img/loading.gif" lazyload alt="A fan-out flow using a (multiplexing) channel selector"></p>
 <p>​      支持将source分发到不同的channel，多个目的地</p>
 <ol start="4">
 <li><p>Load-Balance负载均衡和Failover 故障切换</p>
-<p><img src="/img/t_70_pic_center-16511166368648.png"></p>
+<p><img src="/img/t_70_pic_center-16511166368648.png" srcset="/img/loading.gif" lazyload></p>
 </li>
 </ol>
 <p>将多个sink 组成一个组，sink组实现负载均衡和故障切换</p>
 <h2 id="案例五-多路"><a href="#案例五-多路" class="headerlink" title="案例五 多路"></a>案例五 多路</h2><p>有一个FlumeA监控文件，会把变动发到FlumeB，FlumeB负责写入hdfs，FlumeA还会发送给FlumeC，FlumeC就直接输出到本地console或者文件</p>
-<p><img src="/img/image-20220428115518751-165111812064810.png" alt="image-20220428115518751"></p>
+<p><img src="/img/image-20220428115518751-165111812064810.png" srcset="/img/loading.gif" lazyload alt="image-20220428115518751"></p>
 <ol>
 <li><p>配置文件 flume-file-flume.conf 用来将日志的内容发送到2个channel，两个sink</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line"></span><br><span class="line"># 配置 source</span><br><span class="line"># 配置 selector</span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line"># 配置sink k1</span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = hadoop201</span><br><span class="line">a1.sinks.k1.port = 4545</span><br><span class="line"># 配置sink k2</span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = hadoop201</span><br><span class="line">a1.sinks.k2.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置channel </span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># c2的类型是memory channel</span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line"># c2最多能容纳1000个event</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line"># c2的事务提交100个提交一次</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1 c2<br><span class="hljs-attr">a1.sinks</span> = k1 k2<br><br><span class="hljs-comment"># 配置 source</span><br><span class="hljs-comment"># 配置 selector</span><br><span class="hljs-attr">a1.sources.r1.selector.type</span> = replicating<br><span class="hljs-attr">a1.sources.r1.type</span> = exec<br><span class="hljs-attr">a1.sources.r1.command</span> = tail -F /tmp/njust.log<br><span class="hljs-attr">a1.sources.r1.shell</span> = /bin/bash -c<br><br><span class="hljs-comment"># 配置sink k1</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = avro<br><span class="hljs-attr">a1.sinks.k1.hostname</span> = hadoop201<br><span class="hljs-attr">a1.sinks.k1.port</span> = <span class="hljs-number">4545</span><br><span class="hljs-comment"># 配置sink k2</span><br><span class="hljs-attr">a1.sinks.k2.type</span> = avro<br><span class="hljs-attr">a1.sinks.k2.hostname</span> = hadoop201<br><span class="hljs-attr">a1.sinks.k2.port</span> = <span class="hljs-number">4646</span><br><br><span class="hljs-comment"># 配置channel </span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># c2的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c2.type</span> = memory<br><span class="hljs-comment"># c2最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c2.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c2的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c2.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1 c2<br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br><span class="hljs-attr">a1.sinks.k2.channel</span> = c2<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置文件 flume-flume-hdfs.conf 从flume到hdfs</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a2.sources = r2</span><br><span class="line">a2.channels = c3</span><br><span class="line">a2.sinks = k3</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a2.sources.r2.type = avro</span><br><span class="line">a2.sources.r2.bind = hadoop201</span><br><span class="line">a2.sources.r2.port = 4545</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a2.sinks.k3.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a2.sinks.k3.hdfs.path = hdfs://hadoop201:8020/flume/events2/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a2.sinks.k3.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a2.sinks.k3.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a2.sinks.k3.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a2.sinks.k3.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a2.sinks.k3.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c3的类型是memory channel</span><br><span class="line">a2.channels.c3.type = memory</span><br><span class="line"># c3最多能容纳1000个event</span><br><span class="line">a2.channels.c3.capacity = 1000</span><br><span class="line"># c3的事务提交100个提交一次</span><br><span class="line">a2.channels.c3.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a2.sources.r2.channels = c3</span><br><span class="line">a2.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a2.sources</span> = r2<br><span class="hljs-attr">a2.channels</span> = c3<br><span class="hljs-attr">a2.sinks</span> = k3<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source 一个可执行的命令</span><br><span class="hljs-attr">a2.sources.r2.type</span> = avro<br><span class="hljs-attr">a2.sources.r2.bind</span> = hadoop201<br><span class="hljs-attr">a2.sources.r2.port</span> = <span class="hljs-number">4545</span><br><br><br><span class="hljs-comment"># 配置sink</span><br><span class="hljs-attr">a2.sinks.k3.type</span> = hdfs<br><span class="hljs-comment"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.path</span> = hdfs://hadoop201:<span class="hljs-number">8020</span>/flume/events2/%y-%m-%d/%H%M<br><span class="hljs-comment"># 上传文件的前缀</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.filePrefix</span> = events-<br><span class="hljs-comment"># 是否应该按时间滚动文件夹</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.round</span> = <span class="hljs-literal">true</span><br><span class="hljs-comment"># 10分钟生成一个文件夹</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.roundValue</span> = <span class="hljs-number">10</span><br><span class="hljs-comment"># 定义时间单位</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.roundUnit</span> = minute<br><span class="hljs-comment"># 使用本地时间戳</span><br><span class="hljs-attr">a2.sinks.k3.hdfs.useLocalTimeStamp</span> = <span class="hljs-literal">true</span><br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c3的类型是memory channel</span><br><span class="hljs-attr">a2.channels.c3.type</span> = memory<br><span class="hljs-comment"># c3最多能容纳1000个event</span><br><span class="hljs-attr">a2.channels.c3.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c3的事务提交100个提交一次</span><br><span class="hljs-attr">a2.channels.c3.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a2.sources.r2.channels</span> = c3<br><span class="hljs-attr">a2.sinks.k3.channel</span> = c3<br></code></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>配置文件 flume-flume-local.conf 从flume到本地</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.channels = c4</span><br><span class="line">a3.sinks = k4</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a3.sources.r3.type = avro</span><br><span class="line">a3.sources.r3.bind = hadoop201</span><br><span class="line">a3.sources.r3.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置sink file roll sink</span><br><span class="line">a3.sinks.k4.type = file_roll</span><br><span class="line"># 不会自动建目录，请一定要提前建好目录</span><br><span class="line">a3.sinks.k4.sink.directory = /tmp/hadoop/flume/logs</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c4的类型是memory channel</span><br><span class="line">a3.channels.c4.type = memory</span><br><span class="line"># c4最多能容纳1000个event</span><br><span class="line">a3.channels.c4.capacity = 1000</span><br><span class="line"># c4的事务提交100个提交一次</span><br><span class="line">a3.channels.c4.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a3.sources.r3.channels = c4</span><br><span class="line">a3.sinks.k4.channel = c4</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a3.sources</span> = r3<br><span class="hljs-attr">a3.channels</span> = c4<br><span class="hljs-attr">a3.sinks</span> = k4<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source 一个可执行的命令</span><br><span class="hljs-attr">a3.sources.r3.type</span> = avro<br><span class="hljs-attr">a3.sources.r3.bind</span> = hadoop201<br><span class="hljs-attr">a3.sources.r3.port</span> = <span class="hljs-number">4646</span><br><br><span class="hljs-comment"># 配置sink file roll sink</span><br><span class="hljs-attr">a3.sinks.k4.type</span> = file_roll<br><span class="hljs-comment"># 不会自动建目录，请一定要提前建好目录</span><br><span class="hljs-attr">a3.sinks.k4.sink.directory</span> = /tmp/hadoop/flume/logs<br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c4的类型是memory channel</span><br><span class="hljs-attr">a3.channels.c4.type</span> = memory<br><span class="hljs-comment"># c4最多能容纳1000个event</span><br><span class="hljs-attr">a3.channels.c4.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c4的事务提交100个提交一次</span><br><span class="hljs-attr">a3.channels.c4.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a3.sources.r3.channels</span> = c4<br><span class="hljs-attr">a3.sinks.k4.channel</span> = c4<br></code></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="/img/image-20220428145440550.png" alt="image-20220428145440550" style="zoom: 50%;">
+<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="/img/image-20220428145440550.png" srcset="/img/loading.gif" lazyload alt="image-20220428145440550" style="zoom: 50%;">
 
 <ol>
 <li><p>配置a1 flume-file-avro.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置 source</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/hadoop/test1/example.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line"># 配置sink k1</span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = hadoop203</span><br><span class="line">a1.sinks.k1.port = 4545</span><br><span class="line"></span><br><span class="line"># 配置channel </span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.channels</span> = c1<br><span class="hljs-attr">a1.sinks</span> = k1<br><br><span class="hljs-comment"># 配置 source</span><br><span class="hljs-attr">a1.sources.r1.type</span> = exec<br><span class="hljs-attr">a1.sources.r1.command</span> = tail -F /tmp/hadoop/test1/example.log<br><span class="hljs-attr">a1.sources.r1.shell</span> = /bin/bash -c<br><br><span class="hljs-comment"># 配置sink k1</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = avro<br><span class="hljs-attr">a1.sinks.k1.hostname</span> = hadoop203<br><span class="hljs-attr">a1.sinks.k1.port</span> = <span class="hljs-number">4545</span><br><br><span class="hljs-comment"># 配置channel </span><br><span class="hljs-comment"># c1的类型是memory channel</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1<br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置a2 flume-nc-avro.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a2.sources = r2</span><br><span class="line">a2.channels = c2</span><br><span class="line">a2.sinks = k2</span><br><span class="line"></span><br><span class="line"># 配置 source</span><br><span class="line"># r2的类型是netcat</span><br><span class="line">a2.sources.r2.type = netcat</span><br><span class="line"># 绑定的ip地址是localhost</span><br><span class="line">a2.sources.r2.bind = hadoop202</span><br><span class="line"># 绑定的端口是44444</span><br><span class="line">a2.sources.r2.port = 44444</span><br><span class="line"></span><br><span class="line"># 配置sink k2</span><br><span class="line">a2.sinks.k2.type = avro</span><br><span class="line">a2.sinks.k2.hostname = hadoop203</span><br><span class="line">a2.sinks.k2.port = 4545</span><br><span class="line"></span><br><span class="line"># 配置channel </span><br><span class="line"># c2的类型是memory channel</span><br><span class="line">a2.channels.c2.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a2.channels.c2.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a2.channels.c2.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a2.sources.r2.channels = c2</span><br><span class="line">a2.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a2.sources</span> = r2<br><span class="hljs-attr">a2.channels</span> = c2<br><span class="hljs-attr">a2.sinks</span> = k2<br><br><span class="hljs-comment"># 配置 source</span><br><span class="hljs-comment"># r2的类型是netcat</span><br><span class="hljs-attr">a2.sources.r2.type</span> = netcat<br><span class="hljs-comment"># 绑定的ip地址是localhost</span><br><span class="hljs-attr">a2.sources.r2.bind</span> = hadoop202<br><span class="hljs-comment"># 绑定的端口是44444</span><br><span class="hljs-attr">a2.sources.r2.port</span> = <span class="hljs-number">44444</span><br><br><span class="hljs-comment"># 配置sink k2</span><br><span class="hljs-attr">a2.sinks.k2.type</span> = avro<br><span class="hljs-attr">a2.sinks.k2.hostname</span> = hadoop203<br><span class="hljs-attr">a2.sinks.k2.port</span> = <span class="hljs-number">4545</span><br><br><span class="hljs-comment"># 配置channel </span><br><span class="hljs-comment"># c2的类型是memory channel</span><br><span class="hljs-attr">a2.channels.c2.type</span> = memory<br><span class="hljs-comment"># c1最多能容纳1000个event</span><br><span class="hljs-attr">a2.channels.c2.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c1的事务提交100个提交一次</span><br><span class="hljs-attr">a2.channels.c2.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a2.sources.r2.channels</span> = c2<br><span class="hljs-attr">a2.sinks.k2.channel</span> = c2<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>配置a3 flume-avro-logger.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.channels = c3</span><br><span class="line">a3.sinks = k3</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a3.sources.r3.type = avro</span><br><span class="line">a3.sources.r3.bind = hadoop203</span><br><span class="line">a3.sources.r3.port = 4545</span><br><span class="line"></span><br><span class="line"># 配置sink logger</span><br><span class="line">a3.sinks.k3.type = logger</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c3的类型是memory channel</span><br><span class="line">a3.channels.c3.type = memory</span><br><span class="line"># c3最多能容纳1000个event</span><br><span class="line">a3.channels.c3.capacity = 1000</span><br><span class="line"># c3的事务提交100个提交一次</span><br><span class="line">a3.channels.c3.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a3.sources.r3.channels = c3</span><br><span class="line">a3.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 命名组件</span><br><span class="hljs-attr">a3.sources</span> = r3<br><span class="hljs-attr">a3.channels</span> = c3<br><span class="hljs-attr">a3.sinks</span> = k3<br><br><span class="hljs-comment"># 配置source</span><br><span class="hljs-comment"># source 一个可执行的命令</span><br><span class="hljs-attr">a3.sources.r3.type</span> = avro<br><span class="hljs-attr">a3.sources.r3.bind</span> = hadoop203<br><span class="hljs-attr">a3.sources.r3.port</span> = <span class="hljs-number">4545</span><br><br><span class="hljs-comment"># 配置sink logger</span><br><span class="hljs-attr">a3.sinks.k3.type</span> = logger<br><br><span class="hljs-comment"># 配置channel</span><br><span class="hljs-comment"># c3的类型是memory channel</span><br><span class="hljs-attr">a3.channels.c3.type</span> = memory<br><span class="hljs-comment"># c3最多能容纳1000个event</span><br><span class="hljs-attr">a3.channels.c3.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-comment"># c3的事务提交100个提交一次</span><br><span class="hljs-attr">a3.channels.c3.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 连接起来</span><br><span class="hljs-attr">a3.sources.r3.channels</span> = c3<br><span class="hljs-attr">a3.sinks.k3.channel</span> = c3<br></code></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="自定义"><a href="#自定义" class="headerlink" title="自定义"></a>自定义</h2><p>有时不能满足实际需求，需要自定义Source和Sink</p>
 <h3 id="案例一：自定义Source"><a href="#案例一：自定义Source" class="headerlink" title="案例一：自定义Source"></a>案例一：自定义Source</h3><p>输出自定义的内容，然后在控制台用logger输出</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.edu.njust.flume;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.google.common.collect.Maps;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.Charset;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Context;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Event;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.EventDeliveryException;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.PollableSource;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.conf.Configurable;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.event.EventBuilder;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.source.AbstractSource;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> notre</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/5/4</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySource</span> <span class="keyword">extends</span> <span class="title class_">AbstractSource</span> <span class="keyword">implements</span> <span class="title class_">Configurable</span>, PollableSource &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 定义的属性为将来在job文件中配置的属性</span></span><br><span class="line">  <span class="keyword">private</span> String content;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">long</span> delay;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 这个方法的作用就是在配置的配置文件中读属性</span></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">    content = context.getString(<span class="string">&quot;content&quot;</span>, <span class="string">&quot;今天天气真好&quot;</span>);</span><br><span class="line">    delay = context.getLong(<span class="string">&quot;delay&quot;</span>,<span class="number">2000L</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Status <span class="title function_">process</span><span class="params">()</span> <span class="keyword">throws</span> EventDeliveryException &#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      <span class="comment">// 创建一个空的头</span></span><br><span class="line">      Map&lt;String,String&gt; headMap = Maps.newHashMap();</span><br><span class="line">      <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        <span class="comment">// 创建一个用来传递数据的Event</span></span><br><span class="line">        <span class="type">Event</span> <span class="variable">event</span> <span class="operator">=</span> EventBuilder.withBody(content+i, Charset.forName(<span class="string">&quot;UTF-8&quot;</span>),headMap);</span><br><span class="line">        <span class="comment">// 配置文件中配置了哪个channel连接到这个source，他就去拿哪个channel</span></span><br><span class="line">        getChannelProcessor().processEvent(event);</span><br><span class="line">        <span class="comment">// 休眠下（可以取消）</span></span><br><span class="line">        Thread.sleep(delay);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">return</span> Status.BACKOFF;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Status.READY;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getBackOffSleepIncrement</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="type">long</span> <span class="title function_">getMaxBackOffSleepInterval</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.edu.njust.flume;<br><br><span class="hljs-keyword">import</span> com.google.common.collect.Maps;<br><span class="hljs-keyword">import</span> java.nio.charset.Charset;<br><span class="hljs-keyword">import</span> java.util.Map;<br><span class="hljs-keyword">import</span> org.apache.flume.Context;<br><span class="hljs-keyword">import</span> org.apache.flume.Event;<br><span class="hljs-keyword">import</span> org.apache.flume.EventDeliveryException;<br><span class="hljs-keyword">import</span> org.apache.flume.PollableSource;<br><span class="hljs-keyword">import</span> org.apache.flume.conf.Configurable;<br><span class="hljs-keyword">import</span> org.apache.flume.event.EventBuilder;<br><span class="hljs-keyword">import</span> org.apache.flume.source.AbstractSource;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> notre</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2022/5/4</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractSource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Configurable</span>, PollableSource &#123;<br><br>  <span class="hljs-comment">// 定义的属性为将来在job文件中配置的属性</span><br>  <span class="hljs-keyword">private</span> String content;<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">long</span> delay;<br><br>  <span class="hljs-comment">// 这个方法的作用就是在配置的配置文件中读属性</span><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configure</span><span class="hljs-params">(Context context)</span> &#123;<br>    content = context.getString(<span class="hljs-string">&quot;content&quot;</span>, <span class="hljs-string">&quot;今天天气真好&quot;</span>);<br>    delay = context.getLong(<span class="hljs-string">&quot;delay&quot;</span>,<span class="hljs-number">2000L</span>);<br>  &#125;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> Status <span class="hljs-title function_">process</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> EventDeliveryException &#123;<br>    <span class="hljs-keyword">try</span>&#123;<br>      <span class="hljs-comment">// 创建一个空的头</span><br>      Map&lt;String,String&gt; headMap = Maps.newHashMap();<br>      <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>        <span class="hljs-comment">// 创建一个用来传递数据的Event</span><br>        <span class="hljs-type">Event</span> <span class="hljs-variable">event</span> <span class="hljs-operator">=</span> EventBuilder.withBody(content+i, Charset.forName(<span class="hljs-string">&quot;UTF-8&quot;</span>),headMap);<br>        <span class="hljs-comment">// 配置文件中配置了哪个channel连接到这个source，他就去拿哪个channel</span><br>        getChannelProcessor().processEvent(event);<br>        <span class="hljs-comment">// 休眠下（可以取消）</span><br>        Thread.sleep(delay);<br>      &#125;<br>    &#125;<span class="hljs-keyword">catch</span> (Exception e) &#123;<br>      <span class="hljs-keyword">return</span> Status.BACKOFF;<br>    &#125;<br>    <span class="hljs-keyword">return</span> Status.READY;<br>  &#125;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-type">long</span> <span class="hljs-title function_">getBackOffSleepIncrement</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>  &#125;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-type">long</span> <span class="hljs-title function_">getMaxBackOffSleepInterval</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>  &#125;<br><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
 
 <p>idea如何打包</p>
 <ol>
@@ -273,122 +491,331 @@ Flu">
 <p>上传到flume下的lib目录下</p>
 <p>修改jar包的权限<code>sodu chown hadoop:hadoop FlumeDemo.jar </code></p>
 <p>配置jobs文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type = cn.edu.njust.flume.MySource</span><br><span class="line">a1.sources.r1.content = hello</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = logger</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1 </span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># Name the components on this agent</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.sinks</span> = k1<br><span class="hljs-attr">a1.channels</span> = c1<br><br><span class="hljs-comment"># Describe/configure the source</span><br><span class="hljs-attr">a1.sources.r1.type</span> = cn.edu.njust.flume.MySource<br><span class="hljs-attr">a1.sources.r1.content</span> = hello<br><br><span class="hljs-comment"># Describe the sink</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = logger<br><br><span class="hljs-comment"># Use a channel which buffers events in memory</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># Bind the source and sink to the channel</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1 <br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 
 <p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -c conf -n a1 -f jobs/flume-mysource.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bin/flume-ng agent -c conf -n a1 -f <span class="hljs-built_in">jobs</span>/flume-mysource.conf -Dflume.root.logger=INFO,console<br></code></pre></td></tr></table></figure>
 
 
 
 <h3 id="案例二：自定义Sink"><a href="#案例二：自定义Sink" class="headerlink" title="案例二：自定义Sink"></a>案例二：自定义Sink</h3><p>Sink一定要启动事务，从channel中拿取events，然后写入文件或者hdfs…</p>
 <p>自定义一个Sink，监听netcat内容，加上前后缀，输出到Logger</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cn.edu.njust.flume;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Channel;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Context;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Event;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.EventDeliveryException;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.Transaction;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.conf.Configurable;</span><br><span class="line"><span class="keyword">import</span> org.apache.flume.sink.AbstractSink;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> notre</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2022/5/4</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MySink</span> <span class="keyword">extends</span> <span class="title class_">AbstractSink</span> <span class="keyword">implements</span> <span class="title class_">Configurable</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Logger</span> <span class="variable">LOGGER</span> <span class="operator">=</span> LoggerFactory.getLogger(MySink.class);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> String prefix;</span><br><span class="line">  <span class="keyword">private</span> String suffix;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">configure</span><span class="params">(Context context)</span> &#123;</span><br><span class="line">    prefix = context.getString(<span class="string">&quot;prefix&quot;</span>,<span class="string">&quot;begin-&quot;</span>);</span><br><span class="line">    suffix = context.getString(<span class="string">&quot;suffix&quot;</span>, <span class="string">&quot;-end&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> Status <span class="title function_">process</span><span class="params">()</span> <span class="keyword">throws</span> EventDeliveryException &#123;</span><br><span class="line"></span><br><span class="line">    <span class="type">Channel</span> <span class="variable">ch</span> <span class="operator">=</span> getChannel();</span><br><span class="line">    Event event;</span><br><span class="line">    <span class="type">Transaction</span> <span class="variable">tx</span> <span class="operator">=</span> ch.getTransaction();</span><br><span class="line">    tx.begin();</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">      event = ch.take();</span><br><span class="line">      <span class="keyword">if</span>(event!=<span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      LOGGER.info(prefix+ <span class="keyword">new</span> <span class="title class_">String</span>(event.getBody())+suffix);</span><br><span class="line">      tx.commit();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">return</span> Status.BACKOFF;</span><br><span class="line">    &#125;<span class="keyword">finally</span> &#123;</span><br><span class="line">      tx.close();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Status.READY;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> cn.edu.njust.flume;<br><br><span class="hljs-keyword">import</span> org.apache.flume.Channel;<br><span class="hljs-keyword">import</span> org.apache.flume.Context;<br><span class="hljs-keyword">import</span> org.apache.flume.Event;<br><span class="hljs-keyword">import</span> org.apache.flume.EventDeliveryException;<br><span class="hljs-keyword">import</span> org.apache.flume.Transaction;<br><span class="hljs-keyword">import</span> org.apache.flume.conf.Configurable;<br><span class="hljs-keyword">import</span> org.apache.flume.sink.AbstractSink;<br><span class="hljs-keyword">import</span> org.slf4j.Logger;<br><span class="hljs-keyword">import</span> org.slf4j.LoggerFactory;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@author</span> notre</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@date</span> 2022/5/4</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySink</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractSink</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Configurable</span> &#123;<br><br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Logger</span> <span class="hljs-variable">LOGGER</span> <span class="hljs-operator">=</span> LoggerFactory.getLogger(MySink.class);<br><br>  <span class="hljs-keyword">private</span> String prefix;<br>  <span class="hljs-keyword">private</span> String suffix;<br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configure</span><span class="hljs-params">(Context context)</span> &#123;<br>    prefix = context.getString(<span class="hljs-string">&quot;prefix&quot;</span>,<span class="hljs-string">&quot;begin-&quot;</span>);<br>    suffix = context.getString(<span class="hljs-string">&quot;suffix&quot;</span>, <span class="hljs-string">&quot;-end&quot;</span>);<br>  &#125;<br><br><br>  <span class="hljs-meta">@Override</span><br>  <span class="hljs-keyword">public</span> Status <span class="hljs-title function_">process</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> EventDeliveryException &#123;<br><br>    <span class="hljs-type">Channel</span> <span class="hljs-variable">ch</span> <span class="hljs-operator">=</span> getChannel();<br>    Event event;<br>    <span class="hljs-type">Transaction</span> <span class="hljs-variable">tx</span> <span class="hljs-operator">=</span> ch.getTransaction();<br>    tx.begin();<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>      event = ch.take();<br>      <span class="hljs-keyword">if</span>(event!=<span class="hljs-literal">null</span>) &#123;<br>        <span class="hljs-keyword">break</span>;<br>      &#125;<br>    &#125;<br>    <span class="hljs-keyword">try</span> &#123;<br>      LOGGER.info(prefix+ <span class="hljs-keyword">new</span> <span class="hljs-title class_">String</span>(event.getBody())+suffix);<br>      tx.commit();<br>    &#125;<span class="hljs-keyword">catch</span> (Exception e) &#123;<br>      <span class="hljs-keyword">return</span> Status.BACKOFF;<br>    &#125;<span class="hljs-keyword">finally</span> &#123;<br>      tx.close();<br>    &#125;<br>    <span class="hljs-keyword">return</span> Status.READY;<br>  &#125;<br><br><br>&#125;<br><br></code></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># Name the components on this agent</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.sinks = k1</span><br><span class="line">a1.channels = c1</span><br><span class="line"></span><br><span class="line"># Describe/configure the source</span><br><span class="line">a1.sources.r1.type = netcat</span><br><span class="line">a1.sources.r1.bind = localhost</span><br><span class="line">a1.sources.r1.port = 44444</span><br><span class="line"></span><br><span class="line"># Describe the sink</span><br><span class="line">a1.sinks.k1.type = cn.edu.njust.flume.MySink</span><br><span class="line">a1.sinks.k1.prefix = njust-</span><br><span class="line"></span><br><span class="line"># Use a channel which buffers events in memory</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># Bind the source and sink to the channel</span><br><span class="line">a1.sources.r1.channels = c1 </span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># Name the components on this agent</span><br><span class="hljs-attr">a1.sources</span> = r1<br><span class="hljs-attr">a1.sinks</span> = k1<br><span class="hljs-attr">a1.channels</span> = c1<br><br><span class="hljs-comment"># Describe/configure the source</span><br><span class="hljs-attr">a1.sources.r1.type</span> = netcat<br><span class="hljs-attr">a1.sources.r1.bind</span> = localhost<br><span class="hljs-attr">a1.sources.r1.port</span> = <span class="hljs-number">44444</span><br><br><span class="hljs-comment"># Describe the sink</span><br><span class="hljs-attr">a1.sinks.k1.type</span> = cn.edu.njust.flume.MySink<br><span class="hljs-attr">a1.sinks.k1.prefix</span> = njust-<br><br><span class="hljs-comment"># Use a channel which buffers events in memory</span><br><span class="hljs-attr">a1.channels.c1.type</span> = memory<br><span class="hljs-attr">a1.channels.c1.capacity</span> = <span class="hljs-number">1000</span><br><span class="hljs-attr">a1.channels.c1.transactionCapacity</span> = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># Bind the source and sink to the channel</span><br><span class="hljs-attr">a1.sources.r1.channels</span> = c1 <br><span class="hljs-attr">a1.sinks.k1.channel</span> = c1<br></code></pre></td></tr></table></figure>
 
 <p>运行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/flume-ng agent -n a1 -c conf -f jobs/flume-mysink.conf -Dflume.root.logger=INFO,console</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">bin/flume-ng agent -n a1 -c conf -f <span class="hljs-built_in">jobs</span>/flume-mysink.conf -Dflume.root.logger=INFO,console<br></code></pre></td></tr></table></figure>
 
 
-      
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Flume 学习笔记</div>
+      <div>https://wiserdi.github.io/2022/08/09/flume/</div>
     </div>
-    <footer>
+    <div class="license-meta">
       
-        
-        
-        
-  <div class="addthis addthis_toolbox addthis_default_style">
-    
-      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
-    
-    
-      <a class="addthis_button_tweet"></a>
-    
-    
-      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
-    
-    
-      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
-    
-    <a class="addthis_counter addthis_pill_style"></a>
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Admin</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年8月9日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
   </div>
-  <script src="//s7.addthis.com/js/300/addthis_widget.js"></script>
 
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/08/10/kuroda-seiki/" title="Kuroda Seiki">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Kuroda Seiki</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/" title="2022《虚拟化与云计算应用》期末复习">
+                        <span class="hidden-mobile">2022《虚拟化与云计算应用》期末复习</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
       
-      <div class="clearfix"></div>
-    </footer>
-  </div>
-</article>
-
-
-<section id="comment">
-  <h1 class="title">Comments</h1>
-
-  
-      <div id="fb-root"></div>
-<script>
-  (function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-</script>
-
-<div class="fb-comments" data-href="https://wiserdi.github.io/2022/08/09/flume/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
-      
-  
-</section>
-
-</div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="as_sitesearch" value="wiserdi.github.io">
-  </form>
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
 </div>
 
 
-  
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
 
   
-</aside>
-    <div class="clearfix"></div>
-  </div>
-  <footer id="footer" class="inner"><div class="alignleft">
+
+
+
   
-  &copy; 2022 Admin
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
   
 </div>
-<div class="clearfix"></div></footer>
+
+  </footer>
+
+  <!-- Scripts -->
   
-<script src="/js/jquery-3.4.1.min.js"></script>
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
 
 
-<script src="/js/jquery.imagesloaded.min.js"></script>
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
 
 
-<script src="/js/gallery.js"></script>
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
 
 
 
 
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
 
 
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
 
 
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-
+  
 <script>
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
 </script>
 
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
 </body>
 </html>
