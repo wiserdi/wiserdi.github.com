@@ -51,18 +51,17 @@
     <header>
       
         <div class="icon"></div>
-        <time class="dt-published" datetime="2022-08-09T09:27:32.330Z"><a href="/2022/08/09/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">2022-08-09</a></time>
+        <time class="dt-published" datetime="2022-08-09T09:34:50.000Z"><a href="/2022/08/09/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">2022-08-09</a></time>
       
       
   
-    <h1 class="title"><a href="/2022/08/09/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/"></a></h1>
+    <h1 class="title"><a href="/2022/08/09/%E6%9C%9F%E6%9C%AB%E5%A4%8D%E4%B9%A0/">期末复习</a></h1>
   
 
     </header>
     <div class="e-content entry" itemprop="articleBody">
       
-        <p>title: 大数据期末复习<br>date: 2022-08-09 16:25:48<br>tags:</p>
-<p>Hadoop的核心结构HDFS, MapReduce ，YARN<br>Hadoop的安装<br>5个配置文件 core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml workers<br>启动<br>start-dfs.sh<br>start-yarn.sh</p>
+        <p>Hadoop的核心结构HDFS, MapReduce ，YARN<br>Hadoop的安装<br>5个配置文件 core-site.xml hdfs-site.xml mapred-site.xml yarn-site.xml workers<br>启动<br>start-dfs.sh<br>start-yarn.sh</p>
 <p>jps查看进程<br>NameNode：它是hadoop中的主服务器，管理文件系统名称空间和对集群中存储的文件的访问，保存有metadate。<br>SecondaryNameNode：它不是namenode的冗余守护进程，而是提供周期检查点和清理任务。帮助NN合并editslog，减少NN启动时间。<br>DataNode：它负责管理连接到节点的存储（一个集群中可以有多个节点）。每个存储数据的节点运行一个datanode守护进程。<br>ResourceManager（JobTracker）：JobTracker负责调度DataNode上的工作。每个DataNode有一个TaskTracker，它们执行实际工作。<br>NodeManager：（TaskTracker）执行任务。</p>
 <p>怎么格式化<br>hadoop namenode -foramt<br>文件上传的指令 </p>
 <ol>
@@ -94,7 +93,7 @@
 </ol>
 <p>MapReduce的优缺点<br>优点：</p>
 <ol>
-<li><p>高可靠HA High Available<br> 数据会被自动保存为多个副本（默认3个），提高了容错性，坏了一个可以自动回复</p>
+<li><p>高可靠HA High Available<br>数据会被自动保存为多个副本（默认3个），提高了容错性，坏了一个可以自动回复</p>
 </li>
 <li><p>提高IO性能<br>原理类似raid，一个硬盘的IO吞吐能力是有限的，多副本存在，可以高并发</p>
 </li>
