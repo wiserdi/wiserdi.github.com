@@ -90,14 +90,14 @@
       
       
   
-    <h1 class="title"><a href="/2022/08/09/flume/">flume 学习笔记</a></h1>
+    <h1 class="title"><a href="/2022/08/09/flume/">Flume 学习笔记</a></h1>
   
 
     </header>
     <div class="e-content entry" itemprop="articleBody">
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。</p>
-<p><img src="/DevGuide_image00.png" alt="Agent component diagram"></p>
+        <h1 id><a href="#" class="headerlink" title></a></h1><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>Flume 是一种分布式、可靠且可用的服务，用于高效收集、聚合和移动大量日志数据。它具有基于流数据流的简单灵活的架构。它具有可调整的可靠性机制以及许多故障转移和恢复机制，具有健壮性和容错性。它使用简单可扩展数据模型允许在线分析应用程序。</p>
+<p><img src="/img/DevGuide_image00.png" alt="Agent component diagram"></p>
 <p>实时读取服务器上的日志数据，将数据写入到HDFS</p>
 <h3 id="Flume的优点"><a href="#Flume的优点" class="headerlink" title="Flume的优点"></a>Flume的优点</h3><ol>
 <li><p>可以和任意存储进程集成</p>
@@ -131,7 +131,7 @@
 <p>因为和hadoop下的冲突</p>
 <p>&#x2F;opt&#x2F;module&#x2F;hadoop&#x2F;share&#x2F;hadoop&#x2F;common&#x2F;lib&#x2F;guava-27.0-jre.jar</p>
 <p>可以把上面的新的cp过来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /opt/module/hadoop/share/hadoop/common/lib/guava-27.0-jre.jar /opt/module/lib/</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /opt/module/hadoop/share/hadoop/common/lib/guava-27.0-jre.jar /opt/module/flume/lib/</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="案例一-监控本地端口"><a href="#案例一-监控本地端口" class="headerlink" title="案例一: 监控本地端口"></a>案例一: 监控本地端口</h2><p>NetCat TCP</p>
 <p>使用Flume监听一个端口，收集这个端口的数据，打印到控制台，或者输出到文件</p>
@@ -175,7 +175,7 @@
 </li>
 <li><p>创建flume配置文件</p>
 <p>jobs&#x2F;flume-file-hdfs.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line"># 命令是tail -F</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line"># 命令是tail -F</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>运行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ bin/flume-ng agent -c conf -n a1 -f jobs/flu-file-hdfs.conf </span><br></pre></td></tr></table></figure>
@@ -187,7 +187,7 @@
 <h2 id="案例三-实时监控目录"><a href="#案例三-实时监控目录" class="headerlink" title="案例三: 实时监控目录"></a>案例三: 实时监控目录</h2><p>只监控目录下的新文件，.complete就不管了</p>
 <ol>
 <li><p>配置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source spooldir 监控目录的source</span><br><span class="line">a1.sources.r1.type = spooldir</span><br><span class="line"># 配置监控目录</span><br><span class="line">a1.sources.r1.spoolDir = /tmp/hadoop</span><br><span class="line"># 是否添加文件绝对路径当文件头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line"># 文件上传好以后，会被改名，后缀是什么</span><br><span class="line">a1.sources.r1.fileSuffix = .COMPLETED</span><br><span class="line"># includePattern 可以用正则表达式来配置哪些文件名的文件要上传</span><br><span class="line"># ignorePattern 哪些忽略</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source spooldir 监控目录的source</span><br><span class="line">a1.sources.r1.type = spooldir</span><br><span class="line"># 配置监控目录</span><br><span class="line">a1.sources.r1.spoolDir = /tmp/hadoop</span><br><span class="line"># 是否添加文件绝对路径当文件头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line"># 文件上传好以后，会被改名，后缀是什么</span><br><span class="line">a1.sources.r1.fileSuffix = .COMPLETED</span><br><span class="line"># includePattern 可以用正则表达式来配置哪些文件名的文件要上传</span><br><span class="line"># ignorePattern 哪些忽略</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure>
 
 
 </li>
@@ -198,23 +198,23 @@
 <p>Taildir source 适用监听多个追加文件，而且支持断点续传</p>
 <ol>
 <li><p>配置flume-taildir-hdfs.conf</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source taildir 监控目录下的多个文件追加</span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.positionFile = /tmp/hadoop/taildir_position.json</span><br><span class="line"># 指示有几个文件组，中间用空格分开</span><br><span class="line">a1.sources.r1.filegroups = f1 f2</span><br><span class="line"># 定义f1文件组的文件，可以是单个文件</span><br><span class="line">a1.sources.r1.filegroups.f1 = /tmp/hadoop/test1/example.log</span><br><span class="line">a1.sources.r1.headers.f1.headerKey1 = value1</span><br><span class="line">a1.sources.r1.filegroups.f2 = /tmp/hadoop/test2/.*log.*</span><br><span class="line">a1.sources.r1.headers.f2.headerKey1 = value2</span><br><span class="line">a1.sources.r1.headers.f2.headerKey2 = value2-2</span><br><span class="line"># 日志里面用文件的绝对路径做头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line">a1.sources.ri.maxBatchCount = 1000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1</span><br><span class="line">a1.sinks = k1</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source taildir 监控目录下的多个文件追加</span><br><span class="line">a1.sources.r1.type = TAILDIR</span><br><span class="line">a1.sources.r1.positionFile = /tmp/hadoop/flume/taildir_position.json</span><br><span class="line"># 指示有几个文件组，中间用空格分开</span><br><span class="line">a1.sources.r1.filegroups = f1 f2</span><br><span class="line"># 定义f1文件组的文件，可以是单个文件</span><br><span class="line">a1.sources.r1.filegroups.f1 = /tmp/hadoop/test1/example.log</span><br><span class="line">a1.sources.r1.headers.f1.headerKey1 = value1</span><br><span class="line">a1.sources.r1.filegroups.f2 = /tmp/hadoop/test2/.*log.*</span><br><span class="line">a1.sources.r1.headers.f2.headerKey1 = value2</span><br><span class="line">a1.sources.r1.headers.f2.headerKey2 = value2-2</span><br><span class="line"># 日志里面用文件的绝对路径做头</span><br><span class="line">a1.sources.r1.fileHeader = true</span><br><span class="line">a1.sources.ri.maxBatchCount = 1000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop201:8020/flume/events/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a1.sinks.k1.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a1.sinks.k1.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a1.sinks.k1.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a1.sinks.k1.hdfs.useLocalTimeStamp = true</span><br><span class="line"># 多久生成一个新文件</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.rollInterval = 60</span><br><span class="line"># 一次写100个Event到hdfs</span><br><span class="line">a1.sinks.k1.hdfs.hdfs.hdfs.batchSize = 100</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1</span><br><span class="line">a1.sinks.k1.channel = c1</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h2 id="Flume-事务"><a href="#Flume-事务" class="headerlink" title="Flume 事务"></a>Flume 事务</h2><p>Flume agent中间有三个组件，source  channel  sink，里面流的东西是event ，event由head和body组成</p>
 <p>事务分两个部分</p>
 <h3 id="put事务"><a href="#put事务" class="headerlink" title="put事务"></a>put事务</h3><p>source -&gt; channel的部分 </p>
-<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
+<p><img src="/img/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
 <p>首先Source会采集一批数据，封装为event，缓存达到batch data的最大容量时（batch data的大小取决于配置参数batch size的值），Flume开启事务：</p>
 <p>doPut（）:将这批event写入到临时缓冲区putList，putList是一个LinkedBlockingDeque<br>，大小取决于配置Channel的参数transaction capacity的大小。</p>
 <p>doCommit（）:检查channel内存队列是否足够合并，内存队列的大小由Channel的capacity参数控制， Channel的容量内存队列足够的时候，提交event成功。</p>
 <p>doRollback（）: channel内存队列空间不够时，回滚，这里会将整个putList中的数据都扔掉，然后给Source返回一个ChannelException异常，告诉Source数据没有采集上。Source会重新采集这批数据，然后开启新的事务。</p>
 <h3 id="Take事务"><a href="#Take事务" class="headerlink" title="Take事务"></a>Take事务</h3><p>channel -&gt; sink </p>
-<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center-16511116964952.png" alt="在这里插入图片描述"></p>
+<p><img src="/img/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0Nhc2Vab2VjeGw=,size_16,color_FFFFFF,t_70#pic_center-16511116964952.png" alt="在这里插入图片描述"></p>
 <p>doTake（）：sink将数据剪切取到临时缓冲区takeList，takeList也是一个LinkedBlockingDeque，<br>大小取决于配置Channel的参数transaction capacity的大小，同时也拷贝一份放入写往HDFS的IO流中。</p>
 <p>doCommit（）：如果event全部发送成功，就清除takeList。</p>
 <p>doRollback（）：如果发送过程中出现异常，回滚，将takeList中的全部event归还给Channel。这个操作可能导致数据重复,如果已经写入一半的event到了HDFS，但是回滚时会向channel归还整个takeList中的event，后续再次开启事务向HDFS写入这批event时候，就出现了数据重复。</p>
 <p>Flume的事务仅能保证两个传输阶段的数据不丢，但是如果channel选用的是memory channel，那么由于memory channel将数据存储在内存中，一旦channel发生异常，数据仍然可能丢失，但采用File channel时，数据传输到channel时会落盘，再结合事务，会保证整体上数据不会丢失，但是仍然可能会在take事务阶段发生数据重复。</p>
-<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
+<h2 id="Flume-重要组件"><a href="#Flume-重要组件" class="headerlink" title="Flume 重要组件"></a>Flume 重要组件</h2><p><img src="/img/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center.png" alt="在这里插入图片描述"></p>
 <ol>
 <li><p>Flume Channel Selectors ( 3 种 )</p>
 <p>作用就是选出event该去哪个channel，默认就是replicating（复制）</p>
@@ -244,41 +244,41 @@
 </ol>
 <h2 id="Flume的拓扑结构"><a href="#Flume的拓扑结构" class="headerlink" title="Flume的拓扑结构"></a>Flume的拓扑结构</h2><ol>
 <li><p>串联</p>
-<p><img src="/UserGuide_image03.png" alt="Two agents communicating over Avro RPC"></p>
+<p><img src="/img/UserGuide_image03.png" alt="Two agents communicating over Avro RPC"></p>
 </li>
 </ol>
 <p>​      将多个flume按顺序连接起来，不建议串联太长，因为如果中间一个出问题，整个通道就都完了</p>
 <ol start="2">
 <li>Consolidation 合并</li>
 </ol>
-<p><img src="/UserGuide_image02.png" alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
+<p><img src="/img/UserGuide_image02.png" alt="A fan-in flow using Avro RPC to consolidate events in one place"></p>
 <p>​        大多数情况用这种，工作环境，服务器会非常多，将多个服务器的数据采集汇总，给每台服务器配一个flume，然后传送到一个统一的sink去汇总处理，日志分析</p>
 <ol start="3">
 <li>Multiplexing the flow 多路复用</li>
 </ol>
-<p><img src="/UserGuide_image01.png" alt="A fan-out flow using a (UserGuide_image01.png) channel selector"></p>
+<p><img src="/flume.assets/UserGuide_image01.png" alt="A fan-out flow using a (img/UserGuide_image01.png) channel selector"></p>
 <p>​      支持将source分发到不同的channel，多个目的地</p>
 <ol start="4">
 <li><p>Load-Balance负载均衡和Failover 故障切换</p>
-<p><img src="/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center-16511166368648.png" alt="在这里插入图片描述"></p>
+<p><img src="/img/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80NDMxNDY4MQ==,size_16,color_FFFFFF,t_70#pic_center-16511166368648.png" alt="在这里插入图片描述"></p>
 </li>
 </ol>
 <p>将多个sink 组成一个组，sink组实现负载均衡和故障切换</p>
 <h2 id="案例五-多路"><a href="#案例五-多路" class="headerlink" title="案例五 多路"></a>案例五 多路</h2><p>有一个FlumeA监控文件，会把变动发到FlumeB，FlumeB负责写入hdfs，FlumeA还会发送给FlumeC，FlumeC就直接输出到本地console或者文件</p>
-<p><img src="/image-20220428115518751-165111812064810.png" alt="image-20220428115518751"></p>
+<p><img src="/img/image-20220428115518751-165111812064810.png" alt="image-20220428115518751"></p>
 <ol>
 <li><p>配置文件 flume-file-flume.conf 用来将日志的内容发送到2个channel，两个sink</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a1.sources = r1</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line"></span><br><span class="line"># 配置 source</span><br><span class="line"># 配置 selector</span><br><span class="line">a1.sources.r1.selector.type = replicating</span><br><span class="line">a1.sources.r1.type = exec</span><br><span class="line">a1.sources.r1.command = tail -F /tmp/njust.log</span><br><span class="line">a1.sources.r1.shell = /bin/bash -c</span><br><span class="line"></span><br><span class="line"># 配置sink k1</span><br><span class="line">a1.sinks.k1.type = avro</span><br><span class="line">a1.sinks.k1.hostname = hadoop201</span><br><span class="line">a1.sinks.k1.port = 4545</span><br><span class="line"># 配置sink k2</span><br><span class="line">a1.sinks.k2.type = avro</span><br><span class="line">a1.sinks.k2.hostname = hadoop201</span><br><span class="line">a1.sinks.k2.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置channel </span><br><span class="line"># c1的类型是memory channel</span><br><span class="line">a1.channels.c1.type = memory</span><br><span class="line"># c1最多能容纳1000个event</span><br><span class="line">a1.channels.c1.capacity = 1000</span><br><span class="line"># c1的事务提交100个提交一次</span><br><span class="line">a1.channels.c1.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># c2的类型是memory channel</span><br><span class="line">a1.channels.c2.type = memory</span><br><span class="line"># c2最多能容纳1000个event</span><br><span class="line">a1.channels.c2.capacity = 1000</span><br><span class="line"># c2的事务提交100个提交一次</span><br><span class="line">a1.channels.c2.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a1.sources.r1.channels = c1 c2</span><br><span class="line">a1.sinks.k1.channel = c1</span><br><span class="line">a1.sinks.k2.channel = c2</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>配置文件 flume-flume-hdfs.conf 从flume到hdfs</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a2.sources = r2</span><br><span class="line">a2.channels = c3</span><br><span class="line">a2.sinks = k3</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a2.sources.r2.type = avro</span><br><span class="line">a2.sources.r2.bind = hadoop201</span><br><span class="line">a2.sources.r2.port = 4545</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a2.sinks.k3.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a2.sinks.k3.hdfs.path = hdfs://hadoop201:8020/events2/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a2.sinks.k3.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a2.sinks.k3.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a2.sinks.k3.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a2.sinks.k3.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a2.sinks.k3.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c3的类型是memory channel</span><br><span class="line">a2.channels.c3.type = memory</span><br><span class="line"># c3最多能容纳1000个event</span><br><span class="line">a2.channels.c3.capacity = 1000</span><br><span class="line"># c3的事务提交100个提交一次</span><br><span class="line">a2.channels.c3.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a2.sources.r2.channels = c3</span><br><span class="line">a2.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a2.sources = r2</span><br><span class="line">a2.channels = c3</span><br><span class="line">a2.sinks = k3</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a2.sources.r2.type = avro</span><br><span class="line">a2.sources.r2.bind = hadoop201</span><br><span class="line">a2.sources.r2.port = 4545</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 配置sink</span><br><span class="line">a2.sinks.k3.type = hdfs</span><br><span class="line"># hdfs的路径 要写全称hdfs://namenode:port/path 路径可以用通配符去生成</span><br><span class="line">a2.sinks.k3.hdfs.path = hdfs://hadoop201:8020/flume/events2/%y-%m-%d/%H%M</span><br><span class="line"># 上传文件的前缀</span><br><span class="line">a2.sinks.k3.hdfs.filePrefix = events-</span><br><span class="line"># 是否应该按时间滚动文件夹</span><br><span class="line">a2.sinks.k3.hdfs.round = true</span><br><span class="line"># 10分钟生成一个文件夹</span><br><span class="line">a2.sinks.k3.hdfs.roundValue = 10</span><br><span class="line"># 定义时间单位</span><br><span class="line">a2.sinks.k3.hdfs.roundUnit = minute</span><br><span class="line"># 使用本地时间戳</span><br><span class="line">a2.sinks.k3.hdfs.useLocalTimeStamp = true</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c3的类型是memory channel</span><br><span class="line">a2.channels.c3.type = memory</span><br><span class="line"># c3最多能容纳1000个event</span><br><span class="line">a2.channels.c3.capacity = 1000</span><br><span class="line"># c3的事务提交100个提交一次</span><br><span class="line">a2.channels.c3.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a2.sources.r2.channels = c3</span><br><span class="line">a2.sinks.k3.channel = c3</span><br></pre></td></tr></table></figure>
 
 
 </li>
 <li><p>配置文件 flume-flume-local.conf 从flume到本地</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.channels = c4</span><br><span class="line">a3.sinks = k4</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a3.sources.r3.type = avro</span><br><span class="line">a3.sources.r3.bind = hadoop201</span><br><span class="line">a3.sources.r3.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置sink file roll sink</span><br><span class="line">a3.sinks.k4.type = file_roll</span><br><span class="line"># 不会自动建目录，请一定要提前建好目录</span><br><span class="line">a3.sinks.k4.sink.directory = /tmp/hadoop/logs</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c4的类型是memory channel</span><br><span class="line">a3.channels.c4.type = memory</span><br><span class="line"># c4最多能容纳1000个event</span><br><span class="line">a3.channels.c4.capacity = 1000</span><br><span class="line"># c4的事务提交100个提交一次</span><br><span class="line">a3.channels.c4.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a3.sources.r3.channels = c4</span><br><span class="line">a3.sinks.k4.channel = c4</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"># 命名组件</span><br><span class="line">a3.sources = r3</span><br><span class="line">a3.channels = c4</span><br><span class="line">a3.sinks = k4</span><br><span class="line"></span><br><span class="line"># 配置source</span><br><span class="line"># source 一个可执行的命令</span><br><span class="line">a3.sources.r3.type = avro</span><br><span class="line">a3.sources.r3.bind = hadoop201</span><br><span class="line">a3.sources.r3.port = 4646</span><br><span class="line"></span><br><span class="line"># 配置sink file roll sink</span><br><span class="line">a3.sinks.k4.type = file_roll</span><br><span class="line"># 不会自动建目录，请一定要提前建好目录</span><br><span class="line">a3.sinks.k4.sink.directory = /tmp/hadoop/flume/logs</span><br><span class="line"></span><br><span class="line"># 配置channel</span><br><span class="line"># c4的类型是memory channel</span><br><span class="line">a3.channels.c4.type = memory</span><br><span class="line"># c4最多能容纳1000个event</span><br><span class="line">a3.channels.c4.capacity = 1000</span><br><span class="line"># c4的事务提交100个提交一次</span><br><span class="line">a3.channels.c4.transactionCapacity = 100</span><br><span class="line"></span><br><span class="line"># 连接起来</span><br><span class="line">a3.sources.r3.channels = c4</span><br><span class="line">a3.sinks.k4.channel = c4</span><br></pre></td></tr></table></figure></li>
 </ol>
-<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="/image-20220428145440550.png" alt="image-20220428145440550" style="zoom: 50%;">
+<h2 id="案例六-合并"><a href="#案例六-合并" class="headerlink" title="案例六 合并"></a>案例六 合并</h2><img src="/img/image-20220428145440550.png" alt="image-20220428145440550" style="zoom: 50%;">
 
 <ol>
 <li><p>配置a1 flume-file-avro.conf</p>
@@ -344,237 +344,17 @@
     <header>
       
         <div class="icon"></div>
-        <time class="dt-published" datetime="2022-08-09T11:27:00.000Z"><a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/">2022-08-09</a></time>
+        <time class="dt-published" datetime="2022-08-09T12:20:08.000Z"><a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/">2022-08-09</a></time>
       
       
   
-    <h1 class="title"><a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/">2022《虚拟化与云计算应用》期末复习</a></h1>
+    <h1 class="title"><a href="/2022/08/09/virtualizatoin-and-cloud-computing-final-exam-preparation/">virtualizatoin_and_cloud_computing_final_exam_preparation</a></h1>
   
 
     </header>
     <div class="e-content entry" itemprop="articleBody">
       
-        <h3 id="云计算的概念-KBX-N4S-fmi"><a href="#云计算的概念-KBX-N4S-fmi" class="headerlink" title="云计算的概念(KBX, N4S, fmi)"></a>云计算的概念(KBX, N4S, fmi)</h3><p><a target="_blank" rel="noopener" href="https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types">https://azure.microsoft.com/en-us/overview/what-is-cloud-computing/#cloud-deployment-types</a></p>
-<p>云计算是一种按使用量付费的模式，这种模式提供可用的、便捷的、按需的网络访问， 进入可配置的计算资源共享池（资源包括网络、服务器、存储、应用软件、服务），这些资源能够被快速提供，只需投入很少的管理工作，或与服务供应商进行很少的交互。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Simply put, cloud computing is the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet (“the cloud”) to offer faster innovation, flexible resources, and economies of scale. You typically pay only for cloud services you use, helping you lower your operating costs, run your infrastructure more efficiently, and scale as your business needs change.</span><br></pre></td></tr></table></figure>
-
-<p>复习参考：</p>
-<p><a target="_blank" rel="noopener" href="https://yangguoping.blog.csdn.net/article/details/109583017">https://yangguoping.blog.csdn.net/article/details/109583017</a></p>
-<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_14540820/5191589">https://blog.51cto.com/u_14540820/5191589</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/149636372">https://zhuanlan.zhihu.com/p/149636372</a></p>
-<h3 id="云计算的优点-dd-v-te-extension-mc"><a href="#云计算的优点-dd-v-te-extension-mc" class="headerlink" title="云计算的优点(dd, v, te(extension), mc)"></a><strong>云计算的优点</strong>(dd, v, te(extension), mc)</h3><p>更快速的交付和部署 Faster delivery and deployment</p>
-<p>更高效的虚拟化 More efficient virtualization</p>
-<p>更轻松的迁移和扩展 Easier transfer and extension</p>
-<p>更简单的管理 Simpler management</p>
-<p>更低的成本 Lower cost</p>
-<h3 id="云计算的分类"><a href="#云计算的分类" class="headerlink" title="云计算的分类"></a><strong>云计算的分类</strong></h3><p><strong>按运营模式分：</strong></p>
-<ol>
-<li>公有云 Public cloud</li>
-<li>私有云 Private cloud</li>
-<li>混合云 Hybrid cloud</li>
-<li>社区云 Community cloud</li>
-<li>行业云 Industry cloud</li>
-</ol>
-<p><strong>按提供的服务(Service)分：</strong></p>
-<ol>
-<li>IaaS基础设施及服务 Infrastructure as a service (IaaS)</li>
-<li>PaaS平台及服务 Platform as a service (PaaS)</li>
-<li>SaaS软件及服务 Software as a service (SaaS)</li>
-<li>CaaS容器及服务 Containers as a service (CaaS)</li>
-</ol>
-<p>给你一个描述，或者给你一个产品，你要能分辨出是哪种服务</p>
-<p>亚马逊的AWS属于IaaS基础设施及服务，Windows Azure属于PaaS平台及服务。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">IAAS(infrastructure 基础设施):硬件、裸机、裸金属、亚马逊的AWS</span><br><span class="line">SAAS(software 软件)：Word等各种软件类</span><br><span class="line">PAAS(platform 平台):亚马逊的平台、Microsoft Azure		</span><br><span class="line">CAAS(container 容器): Docker</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="云计算机制"><a href="#云计算机制" class="headerlink" title="云计算机制"></a><strong>云计算机制</strong></h3><p>云计算技术将<u>计算</u>资源、<u>存储</u>资源以及其他各类资源通过<u>网络以服务的形式</u>提供给资源<u>用户</u>。</p>
-<p><strong>云存储机制</strong>：数据的安全性、完整性和保密性 (Confidentiality, security, integrity)</p>
-<p><strong>云存储按存储等级</strong>：文件、块、数据集和对象存储 (Files, blocks, datasets, objects)</p>
-<p>SAN 网络存储 (Storage Area Network)</p>
-<h3 id="云基础设施"><a href="#云基础设施" class="headerlink" title="云基础设施"></a><strong>云基础设施</strong></h3><p>逻辑网络边界(logical separation)：将一组相关的基于云的IT资源与云中的其他主体（如非授权用户）<u>隔离</u>开来，其主要功能是网络分段和隔离，以保证区域内的IT设施的相对<u>独立性</u>。</p>
-<p>虚拟服务器</p>
-<p>云存储设备</p>
-<p>云使用监控</p>
-<p>资源复制</p>
-<h3 id="虚拟化-virtualization-的定义"><a href="#虚拟化-virtualization-的定义" class="headerlink" title="虚拟化(virtualization)的定义"></a><strong>虚拟化(virtualization)的定义</strong></h3><p>虚拟化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是表示计算机资源的抽象方法。通过虚拟化可以用与访问抽象前资源一致的方法访问抽象后的资源。这种资源的抽象方法并不受实现、地理位置或底层资源的物理配置的限制。 </span><br></pre></td></tr></table></figure>
-
-<p>虚拟化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是为某些事物创造的虚拟（相对于真实）版本，如操作系统、计算机系统、存储设备和网络资源等。虚拟化的对象是各种各样的资源,经过虚拟化后的逻辑资源对用户隐藏了不必要的细节，用户可以在虚拟环境中实现其在真实环境中的部分或者全部功能。</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="虚拟化优点"><a href="#虚拟化优点" class="headerlink" title="虚拟化优点"></a><strong>虚拟化优点</strong></h3><p>虚拟机</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">可支持实现物理资源和资源池的动态共享</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提高资源利用率，特别是针对那些平均需求远低于需要为其提供专用资源的不同负载。</span><br></pre></td></tr></table></figure>
-
-<p>虚拟化技术</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将计算机的各种实体资源（CPU、内存、磁盘空间、网络适配器等），予以抽象、转换后呈现出来并可分割、组合为一个或多个电脑配置环境。</span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="虚拟化技术学习了哪几种？"><a href="#虚拟化技术学习了哪几种？" class="headerlink" title="虚拟化技术学习了哪几种？"></a><strong>虚拟化技术学习了哪几种？</strong></h3><ol>
-<li>VMware vSphere</li>
-<li>KVM</li>
-<li>OpenStack</li>
-<li>Docker</li>
-</ol>
-<h3 id="服务器虚拟化"><a href="#服务器虚拟化" class="headerlink" title="服务器虚拟化"></a><strong>服务器虚拟化</strong></h3><p>支撑技术：(CPU, RAM, ROM, DEV&#x2F;IO, Network, Desktop虚拟化)</p>
-<p>CPU 虚拟化、内存虚拟化、存储虚拟化、设备与IO 虚拟化、网络虚拟化、桌面虚拟化</p>
-<h3 id="虚拟化功能-snapshot-clone-deployment-backup-cluster-hot-add-NUMA"><a href="#虚拟化功能-snapshot-clone-deployment-backup-cluster-hot-add-NUMA" class="headerlink" title="虚拟化功能(snapshot, clone, deployment, backup, cluster, hot-add, NUMA)"></a><strong>虚拟化功能</strong>(snapshot, clone, deployment, backup, cluster, hot-add, NUMA)</h3><p>虚拟机快照、虚拟机克隆、虚拟机按模板部署、虚拟机备份、虚拟化集群、虚拟机资源热添加、NUMA(Non-uniform memory access)</p>
-<h3 id="网络常识"><a href="#网络常识" class="headerlink" title="网络常识"></a><strong>网络常识</strong></h3><p>计算机网络按<u>地理范围</u>可分为：</p>
-<ol>
-<li>局域网LAN(<strong>local area network</strong>)</li>
-<li>城域网MAN(<strong>metropolitan area network</strong>)</li>
-<li>广域网WAN(<strong>wide area network</strong>)</li>
-</ol>
-<p>互联网的拓扑结构：<strong>网状型</strong></p>
-<h3 id="存储常识"><a href="#存储常识" class="headerlink" title="存储常识"></a><strong>存储常识</strong></h3><p><strong>独立硬盘冗余阵列</strong>（<strong>RAID</strong>, <strong>R</strong>edundant <strong>A</strong>rray of <strong>I</strong>ndependent <strong>D</strong>isks），旧称<strong>廉价磁盘冗余阵列</strong>（<strong>R</strong>edundant <strong>A</strong>rray of <strong>I</strong>nexpensive <strong>D</strong>isks），简称<strong>磁盘阵列</strong></p>
-<p><strong>raid技术(0,1,5,6)：</strong>raid0 raid1 raid5 raid6</p>
-<p>没有冗余：<strong>raid0</strong></p>
-<p>冗余最高：<strong>raid1</strong></p>
-<h3 id="vSphere"><a href="#vSphere" class="headerlink" title="vSphere"></a><strong>vSphere</strong></h3><p><a target="_blank" rel="noopener" href="https://docs.vmware.com/en/VMware-vSphere/index.html">https://docs.vmware.com/en/VMware-vSphere/index.html</a></p>
-<p><strong>vSphere由ESXi和vCenter Server组成</strong></p>
-<p>ESXi: VMware <em>ESXi</em> (formerly ESX) is an enterprise-class, type-1 hypervisor developed by VMware for deploying and serving virtual computers. </p>
-<p><img src="https://docs.vmware.com/en/VMware-vSphere/images/GUID-5EB66614-1EE8-4F39-8C8B-1E97EEE76791-high.png" alt="img"></p>
-<p><strong>例</strong>：vCenter管理多台服务器<strong>（对）</strong></p>
-<h3 id="iSCSI-x2F-ˈaɪskvzi-x2F-Internet-Small-Computer-Systems-Interface"><a href="#iSCSI-x2F-ˈaɪskvzi-x2F-Internet-Small-Computer-Systems-Interface" class="headerlink" title="iSCSI &#x2F;ˈaɪskʌzi&#x2F; (Internet Small Computer Systems Interface)"></a>iSCSI <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Help:IPA/English">&#x2F;ˈaɪskʌzi&#x2F;</a> (<em>Internet Small Computer Systems Interface</em>)</h3><p>vCenter Server提供了很多适应现代数据中心的高级特性：</p>
-<ol>
-<li>vMotion</li>
-<li>vSphere HA</li>
-<li>vSphere DRS</li>
-</ol>
-<p>例：(用SCSI协议不是http协议，而是TCP&#x2F;IP)</p>
-<h3 id="vMotion实时迁移要求"><a href="#vMotion实时迁移要求" class="headerlink" title="vMotion实时迁移要求"></a><strong>vMotion实时迁移要求</strong></h3><p>（访问存储、千兆网卡、VMKernel、标准虚拟交换机、处理器、端口组）</p>
-<p>①源和目标ESXi主机必须都能够访问保存虚拟机文件的共享存储（FC、FCoE或iSCSI）。</p>
-<p>②源和目标ESXi主机必须具备千兆以太网卡或更快的网卡。</p>
-<p>③源和目标ESXi主机上必须有支持vMotion的VMkernel端口。</p>
-<p>④源和目标ESXi主机必须有相同的标准虚拟交换机。</p>
-<p>⑤待迁移虚拟机连接到的所有虚拟机端口组在源和目标ESXi主机上都必须存在。</p>
-<p>⑥源和目标ESXi主机的处理器必须兼容。</p>
-<h3 id="vSphere的安装"><a href="#vSphere的安装" class="headerlink" title="vSphere的安装"></a><strong>vSphere的安装</strong></h3><p><strong>ESXi iSCSI的配置</strong></p>
-<ol>
-<li><p>在VMware Workstation的虚拟网络编辑器中，添加vmnet2虚拟网络，类型为仅主机模式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将vmnet1、vmnet2、vmnet8的网段分别设置为192.168.100.0/24、192.168.200.0/24、192.168.80.0/24。</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>创建VMware ESXi虚拟机，内存为4GB，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为虚拟机配置3个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>安装VMware ESXi 5.5，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">将管理网络的IP地址配置为192.168.100.100（仅主机模式）</span><br></pre></td></tr></table></figure>
-
-
-</li>
-<li><p>使用vSphere Client连接到ESXi，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">添加虚拟机端口组ForVM，创建标准交换机，绑定vmnic1网卡。</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>添加VMkernel端口，名称为iSCSI，</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">创建标准交换机，绑定vmnic2网卡，配置IP地址192.168.200.100。</span><br></pre></td></tr></table></figure></li>
-</ol>
-<ol start="6">
-<li><p>在本机安装的Starwind中创建一个20GB的iSCSI目标。</p>
-</li>
-<li><p>在ESXi中添加iSCSI软件适配器，绑定VMkernel端口iSCSI，使用动态方式添加iSCSI目标服务器。</p>
-</li>
-<li><p>在ESXi中添加存储器，使用新发现的iSCSI目标，格式化为VMFS-5文件系统，使用全部空间，存储名称为iSCSI-Starwind。</p>
-</li>
-<li><p>将CentOS的安装光盘ISO上传到存储iSCSI-Starwind。</p>
-</li>
-<li><p>在ESXi中创建虚拟机CentOS，放在存储iSCSI-Starwind上，内存为1GB。安装操作系统，将IP地址配置为192.168.80.200&#x2F;24，安装完成后，从本机ping虚拟机CentOS的IP地址。</p>
-</li>
-</ol>
-<h3 id="准备虚拟机顺序"><a href="#准备虚拟机顺序" class="headerlink" title="准备虚拟机顺序"></a>准备虚拟机顺序</h3><p>1） 创建虚拟机</p>
-<p>2） 安装操作系统</p>
-<p>3） 安装vmtools</p>
-<p>4） 打补丁</p>
-<h3 id="vCenter-虚拟化平台"><a href="#vCenter-虚拟化平台" class="headerlink" title="vCenter 虚拟化平台"></a><strong>vCenter 虚拟化平台</strong></h3><ol>
-<li><p>创建一台windows2008 datacenter r2的虚拟机，配置网络为nat，ip地址192.168.220.100，在上面安装vCenter</p>
-</li>
-<li><p>创建两台虚拟机，分别安装 ESXi 主机，在 VMware Workstation 中为 ESXi 主机按顺序添加四块网卡,分别是vmnet8 NAT模式、vmnet1 仅主机模式、vmnet2仅主机模式、vmnet0桥接模式，将管理网络的vmnet8网卡设置为192.168.136.11和192.168.136.12</p>
-</li>
-<li><p>创建一台windows2008 datacenter r2虚拟机，在上面安装starwind，配置iscsi，网络为vmnet1，ip地址为192.168.189.50</p>
-</li>
-<li><p>在vCenter主机中，创建数据中心DC，并添加主机192.168.136.和192.168.136.12</p>
-</li>
-<li><p>配置两台 ESXi 连接到 iSCSI 网络共享存储</p>
-</li>
-<li><p>使用共享存储创建虚拟机（centos7最小化安装），配置虚拟机网卡到vmnet0，桥接模式</p>
-</li>
-<li><p>安装完成后将虚拟机转换为模板，并从模板部署到一台esxi上</p>
-</li>
-<li><p>配置 VMkernel 接口支持 vMotion</p>
-</li>
-<li><p>迁移正在运行的虚拟机</p>
-</li>
-<li><p>在数据中心 DC 的右键菜单中选择新建群集Network Center</p>
-</li>
-<li><p>设置 VMware EVC</p>
-</li>
-<li><p>将 ESXi 主机 192.168.136.11 和 192.168.136.12 拖动到群集 Network Center 中</p>
-</li>
-<li><p>在群集 Network Center 的右键菜单中选择编辑设置，在群集功能中勾选“打开 vSphere DRS</p>
-</li>
-<li><p>打开 vSphere Client，在群集 Network Center 的右键菜单中选择编辑设置。在群集功能</p>
-</li>
-</ol>
-<p>处勾选“打开 vSphere HA”，点击确定。</p>
-<h3 id="vSphere的安装（30分最后大题）"><a href="#vSphere的安装（30分最后大题）" class="headerlink" title="vSphere的安装（30分最后大题）"></a>vSphere的安装（30分最后大题）</h3><p>实验指导书所有的<u>网络拓扑图</u>（十几分）<u>步骤</u>（十几分）（共4网络）（1.1~2.6）</p>
-<p><strong>一、安装 ESXi 服务器</strong></p>
-<p><img src="/image-20220614202336908.png" alt="image-20220614202336908"></p>
-<p><strong>二、管理 VMware 虚拟网络</strong></p>
-<p><img src="/image-20220614202358585.png" alt="image-20220614202358585"></p>
-<p><strong>三、配置 iSCSI 目标服务器</strong></p>
-<p><img src="/image-20220614202418845.png" alt="image-20220614202418845"></p>
-<p><strong>四、配置 ESXi 使用 iSCSI 共享存储</strong></p>
-<p><img src="/image-20220614202438030.png" alt="image-20220614202438030"></p>
-<p><strong>五、安装 vCenter Server</strong></p>
-<p><img src="/image-20220614202456913.png" alt="image-20220614202456913"></p>
-<p><strong>ESXi iSCSI的配置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1) 在VMware Workstation的虚拟网络编辑器中，添加vmnet2虚拟网络，类型为仅主机模式。将vmnet1、vmnet2、	vmnet8的网段分别设置为192.168.100.0/24、192.168.200.0/24、192.168.80.0/24。</span><br><span class="line">2) 创建VMware ESXi虚拟机，内存为4GB，为虚拟机配置3个网卡，网络类型分别为仅主机模式、NAT模式、vmnet2模式。</span><br><span class="line">3) 安装VMware ESXi 5.5，将管理网络的IP地址配置为192.168.100.100（仅主机模式）</span><br><span class="line">4) 使用vSphere Client连接到ESXi，添加虚拟机端口组ForVM，创建标准交换机，绑定vmnic1网卡。</span><br><span class="line">5) 添加VMkernel端口，名称为iSCSI，创建标准交换机，绑定vmnic2网卡，配置IP地址192.168.200.100。</span><br><span class="line">6) 在本机安装的Starwind中创建一个20GB的iSCSI目标。</span><br><span class="line">7) 在ESXi中添加iSCSI软件适配器，绑定VMkernel端口iSCSI，使用动态方式添加iSCSI目标服务器。</span><br><span class="line">8) 在ESXi中添加存储器，使用新发现的iSCSI目标，格式化为VMFS-5文件系统，使用全部空间，存储名称为iSCSI-	Starwind。</span><br><span class="line">9) 将CentOS的安装光盘ISO上传到存储iSCSI-Starwind。</span><br><span class="line">10) 在ESXi中创建虚拟机CentOS，放在存储iSCSI-Starwind上，内存为1GB。安装操作系统，将IP地址配置为	192.168.80.200/24，安装完成后，从本机ping虚拟机CentOS的IP地址。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="KVM"><a href="#KVM" class="headerlink" title="KVM"></a><strong>KVM</strong></h3><p>类似VMware workstation，可以虚拟化安装windows也可以装Linux</p>
-<h3 id="OpenStack"><a href="#OpenStack" class="headerlink" title="OpenStack"></a><strong>OpenStack</strong></h3><p><strong>Keystone&#x2F;Nova&#x2F;Glance&#x2F;Cinder&#x2F;Swift&#x2F;Neutron</strong></p>
-<p>Keystone</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为OpenStack上的所有服务提供身份认证和授权</span><br></pre></td></tr></table></figure>
-
-<p>Nova</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是OpenStack的控制器，支持OpenStack云内的实例的生命周期所需的所有活动处理。Nova作为管理平台管理着OpenStack云里的计算资源和扩展需求。</span><br></pre></td></tr></table></figure>
-
-<p>Glance</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供了一个虚拟磁盘镜像的目录和存储仓库，可以提供对虚拟机镜像的存储和检索。这些磁盘镜像广泛应用于Nova组件之中。Glance能进行多个数据中心的镜像管理和租户私有镜像管理。</span><br></pre></td></tr></table></figure>
-
-<p>Cinder</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cinder组件为虚拟机实例提供了块存储设备，同时为管理存储设备提供了一整套方法</span><br></pre></td></tr></table></figure>
-
-<p>Swift</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">提供对象存储服务，允许对文件进行存储或者检索，但不通过挂载文件服务器上目录的方式来实现。Swift为OpenStack提供了分布式的、最终一致的虚拟对象存储。</span><br></pre></td></tr></table></figure>
-
-<p>Neutron</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">是OpenStack中提供网络服务的核心组件，基于软件定义网络的思想，实现软件化的网络资源管理，在实现上充分利用了Linux操作系统中各种网络相关技术，支持第三方插件。</span><br></pre></td></tr></table></figure>
-
-<p>OpenStack的各个服务之间通过统一的REST风格的API调用，实现系统的<strong>松耦合</strong></p>
-<h3 id="容器"><a href="#容器" class="headerlink" title="容器"></a><strong>容器</strong></h3><p>Docker：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">容器container、镜像image、仓库repository</span><br></pre></td></tr></table></figure>
-
-<p>Docker使用沙箱(sandbox)机制，用的namespace实现应用系统之间的隔离</p>
-<p>Docker是开源项目</p>
-<h3 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h3><p>Docker</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">是一个开源的应用容器引擎，开发者可以打包他们的应用及依赖(dependency)到一个可移植的容器中，发布到流行的Linux机器上，也可实现虚拟化。</span><br><span class="line">Docker is an open source containerization platform. It enables developers to package applications into containers—standardized executable components combining application source code with the operating system (OS) libraries and dependencies required to run that code in any environment. Containers simplify delivery of distributed applications, and have become increasingly popular as organizations shift to cloud-native development and hybrid multicloud environments.</span><br></pre></td></tr></table></figure>
-
-<p>Kubernetes</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">是一个开源的容器集群管理系统，可以实现容器集群的</span><br><span class="line">自动化部署、自动化扩缩容量、维护等功能。</span><br></pre></td></tr></table></figure>
-
-
-
-
+        
       
     </div>
     <footer>
